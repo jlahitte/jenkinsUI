@@ -1,5 +1,5 @@
 {
-  "name": "rssReader",
+  "name": "jenkinsUI",
   "main": "index.html",
   "dependencies": {
     "chalk": "^1.0.0",
@@ -7,7 +7,7 @@
     "request": "^2.54.0"
   },
   "version": "0.0.1",
-  "description": "Simple RSS Reader",
+  "description": "Jenkins UI",
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
