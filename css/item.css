@@ -1,0 +1,19 @@
+.itemTitle{
+  font: italic 12px/30px Georgia, serif;
+  color: red;
+}
+.l_jobs{
+  font: italic 12px/30px Georgia, serif;
+  color: darkgray;
+}
+.text_valign-middle{
+  vertical-align: middle;
+  line-height: normal;
+}
+
+.d_LastCommit{
+  background-color: yellow;
+  color: #000000;
+  border-color: black;
+  border: 2px;
+}
