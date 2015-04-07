@@ -8,3 +8,6 @@ locales
 nw.pak
 *.dll
 *.dat
+nw.exe
+nwjc.exe
+.settings/*
