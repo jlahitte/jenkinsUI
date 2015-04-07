@@ -3,3 +3,8 @@ nwjc
 nwjs
 nwjs.app/*
 nwjs.app
+locales/*
+locales
+nw.pak
+*.dll
+*.dat
