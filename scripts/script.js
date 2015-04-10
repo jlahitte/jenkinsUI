@@ -11,16 +11,17 @@ $(main = function() {
 	// ////////////////////////
 	// List all jobs
 	// //////////////////////
-	var jqxhrAllJobs = $.getJSON(JENKINS_URL + JSON_PATH, function(data) {
-		jobs = getJobsData(data);
-	/**	for (i = 0; i < jobs.length; i++) {
-			var job = jobs[i];
-			jobs[i] = getJobDetail(job);
-		}**/
-		$('#jobsHandleBars').render('jenkinsJob', jobs);
-	}).fail(function() {
-		console.log("error");
-	});
+	$.getJSON(JENKINS_URL + JSON_PATH)
+	 .done(function(data) {
+		 	console.log("done");
+		 	jobs = getJobsData(data, function() {
+		 	for (i = 0; i < jobs.length; i++) {
+		 		var job = jobs[i];
+		 		jobs[i] = getJobDetail(job);
+		 	}
+		 	$('#jobsHandleBars').render('jenkinsJob', jobs);
+		 	}
+		 	)});
 
 	suppSymbolFromBranch = function(value) {
 		var re = /([\(-\)])/g;
@@ -28,6 +29,7 @@ $(main = function() {
 	};
 
 	getJobsData = function(data) {
+
 		var jobs = [];
 		for (i = 0; i < data.jobs.length; i++) {
 			var job = data.jobs[i];
@@ -51,7 +53,7 @@ $(main = function() {
 	getJobDetail = function(job) {
 		var url = job.url + JSON_PATH;
 		$.getJSON(url, function(data) {
-			//job.detail = data;
+			// job.detail = data;
 			jobs[job.id].detail = data;
 		}).fail(function() {
 			console.log("error for detail on job : " + job.name);

@@ -9,6 +9,6 @@ $(document).ready(function(){
 				console.log("Conf file :" + jenkinsFcfg);
 				window.JENKINS_URL = jenkinsFcfg.get('jenkins.url');
 				//lancement du traitement
-				main();
+
 			});
 });
