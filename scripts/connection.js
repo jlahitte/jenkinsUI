@@ -26,3 +26,11 @@ $.getJSON(JENKINS_URL + JSON_PATH)
 				console.log("All jobs where read");
 			});
 };
+
+builds = function(url){
+	$.getJSON(url+JSON_PATH).done(function(data){
+		console.log("Detail for build logged " + data.displayName);
+	}
+	);
+
+}
