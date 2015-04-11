@@ -1,6 +1,6 @@
 {
 "jenkins":{
 	"id": "01",
-	"url": "http://grdevbdfr2.dev.kf-sbfr.net:9087/jenkins"
+	"url": "https://ci.jenkins-ci.org"
 }
 }
