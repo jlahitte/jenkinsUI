@@ -4,6 +4,14 @@
 <b>{{description}}</b>
 
   <div id='builds_{{name}}'>
-
+  	<ul>
+	{{#each builds}}
+		<li> {{number}} - <a href="#" onclick="changeSetDetail('{{url}}');">...more</a>	</li>
+			<div id='job{{../name}}build{{fullDisplayName}}' data-buildNumber="{{number}}">
+  			<div>
+	{{/each}}
+	</ul>
   <div>
+  
+    
 </div>

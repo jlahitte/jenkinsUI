@@ -14,7 +14,7 @@ $.getJSON(JENKINS_URL + JSON_PATH)
 					var url = currJob.url + "/api/json?pretty=true";
 					console.log(url);
 					$.getJSON(url).done(function(data){
-						console.log("Details from job received for " + data.name);
+						console.log("Details from job received for " + data.url);
 						displayJobDetail(data);
 					});
 
@@ -32,5 +32,12 @@ builds = function(url){
 		console.log("Detail for build logged " + data.displayName);
 	}
 	);
-
 }
+changeSetDetail=function(url){
+	$.getJSON(url+JSON_PATH).done(function(data){
+		console.log("Detail for build logged " + data.url);
+		displayChangeSet(data);
+	});	
+		
+};
+
