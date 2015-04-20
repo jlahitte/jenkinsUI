@@ -39,9 +39,10 @@ builds = function(url){
 // and display them as per defined within genUi.js--> displayChangeSet()
 // url : url to the detail of the build
 changeSetDetail=function(event,url){
+	//Désactivation du comportement du lien par defaut
+	//Provoquait un retour en haut de page
 	event.preventDefault();
 	$.getJSON(url+JSON_PATH).done(function(data){
-		console.log("Detail for build logged " + data.url);
 		displayChangeSet(data);
 	});
 

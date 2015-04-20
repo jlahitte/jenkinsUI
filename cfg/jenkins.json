@@ -1,6 +1,6 @@
 {
 "jenkins":{
 	"id": "01",
-	"url": "https://ci.jenkins-ci.org/"
+	"url": "https://ci.jenkins-ci.org/view/Jenkins%20core/"
 }
 }

@@ -1,14 +1,14 @@
 <span class="jobTitle">{{displayName}}</span>
-<div class="JobDetail l_jobs text_valign-middle">
+<div class="JobDetail text_valign-middle">
   <a href='#' onClick='builds("{{url}}")'> {{name}}</a></br>
-<b>{{description}}</b>
+  <span class="l_jobs"><b>{{description}}</b></span>
 
   <div id='builds_{{name}}'>
   	<ul>
 	{{#each builds}}
 		<li> {{number}} - <a href="#" onclick="changeSetDetail(event,'{{url}}');">...more</a>	</li>
 			<div id='job{{../name}}build{{fullDisplayName}}' data-buildNumber="{{number}}">
-  			<div>
+      </div>
 	{{/each}}
 	</ul>
   <div>
