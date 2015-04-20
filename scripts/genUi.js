@@ -15,7 +15,7 @@ displayJobDetail = function(job){
 
 displayChangeSet = function(build){
 	console.log("displaying ChangeSet");
-	//Récupération du div attenant au lien (défini dans "jankinsJobDetail.hbs")
+	//RÃ©cupÃ©ration du div attenant au lien (dÃ©fini dans "jankinsJobDetail.hbs")
 	var div = $("[data-buildNumber=" + build.number+"]");
 	div.render('jenkinsChangeSet', build);
 }

@@ -27,17 +27,22 @@ $.getJSON(JENKINS_URL + JSON_PATH)
 			});
 };
 
+//Get build details
 builds = function(url){
 	$.getJSON(url+JSON_PATH).done(function(data){
 		console.log("Detail for build logged " + data.displayName);
 	}
 	);
 }
-changeSetDetail=function(url){
+
+//Get a list of changes for a particular build
+// and display them as per defined within genUi.js--> displayChangeSet()
+// url : url to the detail of the build
+changeSetDetail=function(event,url){
+	event.preventDefault();
 	$.getJSON(url+JSON_PATH).done(function(data){
 		console.log("Detail for build logged " + data.url);
 		displayChangeSet(data);
-	});	
-		
-};
+	});
 
+};

@@ -1,6 +1,6 @@
 .itemTitle{
   font: italic 12px/30px Georgia, serif;
-  color: red;
+  color: #000000;
 }
 .l_jobs{
   font: italic 12px/30px Georgia, serif;
@@ -12,12 +12,26 @@
 }
 
 .d_LastCommit{
-  background-color: yellow;
-  color: #000000;
+  background-color: #72aeef;
+  color: #fc5454;
   border-color: black;
   border: 2px;
 }
 .JobDetail{
-   background-color: yellow;
-   color: red;
+   background-color: rgba(222, 227, 227, 0.77);
+   color: rgba(148, 150, 155, 0.79);
+   border-color: #d4e3e6;
+   border-style: outset;
+   border-width: 3px;
+   border-radius: 10px;
+   padding-left: 10px;
+   padding-right: 10px;
+   padding-top: 5px;
+   padding-bottom: 5px;
+}
+.jobTitle{
+  width: 250px;
+  color:#d8f7e6;
+  halign: center
+
 }
