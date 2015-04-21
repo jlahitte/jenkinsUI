@@ -10,5 +10,7 @@ $(document).ready(function(){
 				window.JENKINS_URL = jenkinsFcfg.get('jenkins.url');
 				//lancement du traitement
 				connectToJenkins();
+
+				//listAssystFor("https://ci.jenkins-ci.org/view/Jenkins%20core/job/jenkins_lts_branch/api/json?pretty=true");
 			});
 });
