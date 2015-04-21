@@ -2,7 +2,9 @@
 <div class="JobDetail text_valign-middle">
   <a href='#' onClick='builds("{{url}}")'> {{name}}</a></br>
   <span class="l_jobs"><b>{{description}}</b></span>
+  </br>
 
+  <input type="button" value="ASSYST" onclick="listAssystFor('{{url}}')"/><span id="{{fullDisplayName}}"> </span>
   <div id='builds_{{name}}'>
   	<ul>
 	{{#each builds}}
