@@ -55,10 +55,19 @@ listAssystFor = function(url) {
 					countASSYST(item.comment);
 				}
 			}
-			//TODO : Affichage résultat à faire
-			alert("Liste ASSSYT : " + Object.keys(ASSYST_HASHMAP));
+			
+			displayListOfAssyst();
 			ASSYST_HASHMAP = [];
 		})
 	});
 
+}
+
+var displayListOfAssyst= function(){
+	var boxListAssyst = $("#assystList");
+	boxListAssyst.html("");
+	for (var i in ASSYST_HASHMAP){
+		boxListAssyst.append( "<span class='assystItem'>" + i + "</span> </br>");
+	}
+	boxListAssyst.show();
 }

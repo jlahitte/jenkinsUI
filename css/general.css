@@ -1,6 +1,52 @@
-body{
-  background-color: #d92323;
+body {
+	background-color: #d92323;
 }
-h1,h2,h3{
-  color: #ffffff;
+
+h1, h2, h3 {
+	color: #ffffff;
+}
+
+.fixedBox {
+	position: fixed;
+	right: 10px;
+	top: 10px;
+}
+.innerFixedBox {
+	position: fixed;
+	right: 10px;
+	top: 46px;
+	height: 165px;
+	width: 150px;
+}
+
+.TitreTableCell {
+	background-color: rgba(222, 227, 227, 0.77);
+	border-color: #d4e3e6;
+	border-style: outset;
+	border-width: 3px;
+	border-radius: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	width: 150px;
+	text-align: center;
+}
+
+.sizeBox {
+	height: 200px;
+	width: 150px;
+}
+
+.listFixBox {
+	background-color: rgba(222, 227, 227, 0.77);
+	border-color: #d4e3e6;
+	border-style: outset;
+	border-width: 3px;
+	border-radius: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 10px;
+	padding-bottom: 5px;
+	width: 150px;
 }
