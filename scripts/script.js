@@ -1,7 +1,5 @@
 $(main = function() {
-	var LASTBUILD_URI = "/lastBuild/api/json?pretty=true";
-	var JSON_PATH = "/api/json?pretty=true";
-	var JOBS_PATH = "/view/All/job/";
+
 	var br = $('<br>');
 	var jobs;
 	$.handlebars({
