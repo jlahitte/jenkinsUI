@@ -8,7 +8,19 @@ displayJobDetail = function(job){
   var aDiv = $("<div>",{
     id: "div_" + job.name
   });
-  $("#jobsHandleBars").append(aDiv);
+  if(job.name=="DEPOT_JAVA_DR1_branch(DR1)"){
+	  $("#jobsHandleBarsDR1").append(aDiv);
+  }
+  if(job.name=="DEPOT_JAVA_IR1_branch(IR1)"){
+	  $("#jobsHandleBarsIR1").append(aDiv);
+  }
+  if(job.name=="DEPOT_JAVA_PP2_branch(PP2)"){
+	  $("#jobsHandleBarsPP2").append(aDiv);
+  }
+  if(job.name=="DEPOT_JAVA_PROD_branch"){
+	  $("#jobsHandleBarsPRD").append(aDiv);
+  }
+  
   aDiv.render('jenkinsJobDetail', job);
 
 }
