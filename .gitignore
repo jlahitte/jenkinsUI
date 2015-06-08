@@ -12,4 +12,4 @@ nw.exe
 nwjc.exe
 .settings/*
 cfg/*
-node_modules/*
+node_modules/nw/*
