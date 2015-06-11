@@ -8,6 +8,12 @@ $(document).ready(function(){
 				var jenkinsFcfg = files.jenkins;
 				console.log("Conf file :" + jenkinsFcfg);
 				window.JENKINS_URL = jenkinsFcfg.get('jenkins.url');
+				
+
+				var githubFcfg = files.gitHub;
+				console.log("Conf file :" + githubFcfg);
+				window.GITHUB_URL = githubFcfg.get('github.url');
+				
 				//lancement du traitement
 				connectToJenkins();
 				//Initialisation interface web

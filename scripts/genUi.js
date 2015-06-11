@@ -57,6 +57,15 @@ displayJobLastCommit = function(commit){
 	  if(commit.fullDisplayName.split(" ")[0]=="DEPOT_JAVA_PROD_branch"){
 		  $("#jobsHandleBarsPRD .l_jobs").append(aSpan);
 	  }
-	  var lastCommit={lastCommit:  commit.actions[1].lastBuiltRevision.SHA1, branch: commit.actions[1].lastBuiltRevision.branch[0].name};
+	  var lastCommit={lastCommit:  commit.actions[1].lastBuiltRevision.SHA1, branch: commit.actions[1].lastBuiltRevision.branch[0].name, url:GITHUB_URL+"commit/"+commit.actions[1].lastBuiltRevision.SHA1};
 	  aSpan.render('commit', lastCommit);
 }
+
+openGitHub=function(url){
+	var gui = require('nw.gui');
+
+	// Open URL with default browser.
+	gui.Shell.openExternal(url);
+
+};
+
