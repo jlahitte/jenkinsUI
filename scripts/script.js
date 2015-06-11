@@ -29,22 +29,20 @@ $(main = function() {
 	getJobsData = function(data) {
 
 		var jobs = [];
-		for (i = 0; i < data.jobs.length; i++) {
-			var job = data.jobs[i];
-			var icon = "./ressources/img/greenchecked.png";
+			var job = data.lastSuccessfulBuild;
+			var icon = "ressources/img/greenchecked.png";
 			if (job.color !== "blue") {
-				icon = "./ressources/img/redchecked.png";
+				icon = "ressources/img/redchecked.png";
 			}
 			var jobObj = {
 				"icon" : icon,
 				"url" : job.url,
 				"name" : job.name,
-				"id" : i,
+				"id" : 0,
 				"detail" : ""
 			};
 			console.log("jobObj" + jobObj);
-			jobs[i] = jobObj;
-		}
+			jobs[0] = jobObj;
 		return jobs;
 	};
 

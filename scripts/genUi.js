@@ -39,3 +39,24 @@ displayChangeSet = function(build){
   }
 
 }
+
+displayJobLastCommit = function(commit){
+	var aSpan = $("<span>",{
+	    id: "span_" + commit.fullDisplayName.split(" ")[0]
+	  });
+
+	  if(commit.fullDisplayName.split(" ")[0]=="DEPOT_JAVA_DR1_branch(DR1)"){
+		  $("#jobsHandleBarsDR1 .l_jobs" ).first().append(aSpan);
+	  }
+	  if(commit.fullDisplayName.split(" ")[0]=="DEPOT_JAVA_IR1_branch(IR1)"){
+		  $("#jobsHandleBarsIR1 .l_jobs").append(aSpan);
+	  }
+	  if(commit.fullDisplayName.split(" ")[0]=="DEPOT_JAVA_PP2_branch(PP2)"){
+		  $("#jobsHandleBarsPP2 .l_jobs").append(aSpan);
+	  }
+	  if(commit.fullDisplayName.split(" ")[0]=="DEPOT_JAVA_PROD_branch"){
+		  $("#jobsHandleBarsPRD .l_jobs").append(aSpan);
+	  }
+	  var lastCommit={lastCommit:  commit.actions[1].lastBuiltRevision.SHA1, branch: commit.actions[1].lastBuiltRevision.branch[0].name};
+	  aSpan.render('commit', lastCommit);
+}
