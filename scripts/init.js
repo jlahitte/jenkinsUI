@@ -13,6 +13,7 @@ $(document).ready(function(){
 				var githubFcfg = files.gitHub;
 				console.log("Conf file :" + githubFcfg);
 				window.GITHUB_URL = githubFcfg.get('github.url');
+				window.GITHUB_TOKEN = githubFcfg.get('github.access_token');
 				
 				//lancement du traitement
 				connectToJenkins();
