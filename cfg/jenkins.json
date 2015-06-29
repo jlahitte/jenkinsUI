@@ -1,6 +1,6 @@
 {
 "jenkins":{
 	"id": "01",
-	"url": "YOUR_URL_TO_JENKINS"
+	"url": "http://grdevbdfr2.dev.kf-sbfr.net:9087/jenkins/"
 }
 }

@@ -1,27 +1,15 @@
 
 //Connect to Jenkins and get details for all jobs
 connectToJenkins = function(){
-$.getJSON(JENKINS_URL + JSON_BRANCH_DEPOT + JSON_PATH)
-			.done(function(data){
-				console.log("ALL JOBS done");
-				var jobs = data.jobs
-
-				for (var i = 0;  i < jobs.length; i++){
-					var currJob = jobs[i];
-					var url = currJob.url + JSON_PATH;
-					console.log(url);
-					$.getJSON(url).done(function(data){
-						console.log("Details from job received for " + data.url);
-						displayJobDetail(data);
-					});
-
-				}
-			})
-			.fail(function(){
-				console.log("ALL JOBS failed");
-			}).complete(function(){
-				console.log("All jobs where read");
-			});
+	for (var i = 0;  i < window.JENKINS_BRANCHES.length; i++){
+		var currJob = window.JENKINS_BRANCHES[i];
+		var url = currJob.branch_url + JSON_PATH;
+		console.log(url);
+		$.getJSON(url).done(function(data){
+			console.log("Details from job received for " + data.url);
+			displayJobDetail(data);
+		});
+	}
 };
 
 //Get build details

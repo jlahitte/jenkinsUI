@@ -32,6 +32,7 @@ countASSYST = function(comment) {
 }
 
 listAssystFor = function(url) {
+	console.log("ASSYST pour : " + url + JSON_PATH);
 	$.getJSON(url + JSON_PATH).done(function(data) {
 		var builds = [];
 		var maxBuild = BUILD_HISTORY_MAX;
