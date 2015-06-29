@@ -1,13 +1,11 @@
-//var LASTBUILD_URI = "/lastBuild/api/json?pretty=true";
-//var JSON_PATH = "api/json?pretty=true";
-//var JOBS_PATH = "/view/All/job/";
+
 var BUILD_HISTORY_MAX = 10;
 var ASSYST_HASHMAP = [];
 detailForBuild = function(urlB) {
 	return $.getJSON(urlB);
 }
 
-// Detecte les numéros d'assyst et les stock dans la table ASSYST_HASHMAP
+// Detecte les numï¿½ros d'assyst et les stock dans la table ASSYST_HASHMAP
 countASSYST = function(comment) {
 	var re = /(\d{6})/g;
 	var str = comment;

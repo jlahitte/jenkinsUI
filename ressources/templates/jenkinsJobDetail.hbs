@@ -1,14 +1,15 @@
 <div class="JobDetail text_valign-middle">
-  <span class="jobTitle">{{displayName}}</span></br>
+  <span class="jobTitle">{{displayName}}</span>
+  </br>
   <span class="l_jobs"><b>{{description}}</b></span>
   </br>
-
-  <input type="button" value="ASSYST" onclick="listAssystFor('{{url}}')"/><span id="{{fullDisplayName}}"> </span>
+  <input type="button" value="ASSYST" onclick="listAssystFor('{{url}}')"/>
+  
   <div id='builds_{{name}}'>
   	<ul>
 	{{#each builds}}
 		<li> {{number}} - <a href="#" onclick="changeSetDetail(event,'{{url}}');">...more</a>	</li>
-			<div id='job{{../name}}build{{fullDisplayName}}' data-buildNumber="{{number}}">
+			<div id='job{{../name}}build{{number}}' data-buildNumber="{{number}}">
       </div>
 	{{/each}}
 	</ul>

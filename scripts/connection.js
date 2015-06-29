@@ -1,4 +1,3 @@
-
 //Connect to Jenkins and get details for all jobs
 connectToJenkins = function(){
 	for (var i = 0;  i < window.JENKINS_BRANCHES.length; i++){

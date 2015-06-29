@@ -13,6 +13,13 @@ $(document).ready(function(){
 										   branches.environnements.IR1,
 										   branches.environnements.PP2,
 										   branches.environnements.PRD];
+				
+
+				var githubFcfg = files.gitHub;
+				console.log("Conf file :" + githubFcfg);
+				window.GITHUB_URL = githubFcfg.get('github.url');
+				window.GITHUB_TOKEN = githubFcfg.get('github.access_token');
+				
 				//lancement du traitement
 				connectToJenkins();
 				//Initialisation interface web
