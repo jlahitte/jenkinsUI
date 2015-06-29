@@ -11,5 +11,4 @@ nw.pak
 nw.exe
 nwjc.exe
 .settings/*
-cfg/*
 node_modules/nw/*
