@@ -56,17 +56,17 @@ listAssystFor = function(url) {
 			}
 			
 			displayListOfAssyst();
+			console.log("ASSYST(s) trouvé(s) : " + ASSYST_HASHMAP.length);
 			ASSYST_HASHMAP = [];
 		})
 	});
 
 }
 
-var displayListOfAssyst= function(){
-	var boxListAssyst = $("#assystList");
-	boxListAssyst.html("");
-	for (var i in ASSYST_HASHMAP){
-		boxListAssyst.append( "<span class='assystItem'>" + i + "</span> </br>");
-	}
-	boxListAssyst.show();
+listAssystFromGH = function(url) {
+	var branchId = jenkinsJobUrlToGHBranch(url);
+	listCommits(window.GITHUB_TOKEN,branchId);
 }
+
+
+

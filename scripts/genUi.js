@@ -61,6 +61,17 @@ displayJobLastCommit = function(commit){
 	  aSpan.render('commit', lastCommit);
 }
 
+displayAssyst = function(data){
+	var boxListAssyst = $("#assystList");
+	boxListAssyst.html("");
+	for (var i in ASSYST_HASHMAP){
+		boxListAssyst.append( "<span class='assystItem'>" + i + "</span> </br>");
+	}
+	boxListAssyst.show();
+	
+	ASSYST_HASHMAP = [];
+	
+}
 openGitHub=function(url){
 	var gui = require('nw.gui');
 

@@ -12,3 +12,4 @@ nw.exe
 nwjc.exe
 .settings/*
 node_modules/nw/*
+cfg/gitHub.json
