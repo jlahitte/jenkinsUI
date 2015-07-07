@@ -2,7 +2,7 @@ function updateInstanceJob(url, environement) {
 	$.getJSON(url).done(function(data) {
 		console.log("Details from job received for " + environement);
 		window.BRICODEPOT_INSTANCES[environement].job = data;
-		displayEnvironementJobDetail(environement, data);
+		displayEnvironementJobDetail(environement, window.BRICODEPOT_INSTANCES[environement]);
 	}).fail(function(data) {
 		console.log("error " + data.status + " for bricodepot instance " + environement);
 		window.BRICODEPOT_INSTANCES[environement].job = {};
@@ -10,7 +10,6 @@ function updateInstanceJob(url, environement) {
 }
 
 connectToBricoDepot = function() {
-	window.BRICODEPOT_INSTANCES_VERSION = {};
 	$.each(window.BRICODEPOT_INSTANCES, function(environement, instance) {
 		var url = instance.instance_url + BRICO_JSON_PATH;
 		var name = instance.instance_name;

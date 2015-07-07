@@ -13,6 +13,12 @@ span.error{
   font: italic 12px/30px Georgia, serif;
   color: #513b48;
 }
+.env_url{ 
+  font-family: "Arial Black", Gadget, sans-serif;
+  font-size: 1.2em;
+  font-weight: bolder;
+ color: #000000;
+}
 .text_valign-middle{
   vertical-align: middle;
   line-height: normal;

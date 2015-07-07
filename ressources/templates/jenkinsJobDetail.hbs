@@ -1,13 +1,22 @@
 <div class="JobDetail text_valign-middle">
-  <span class="jobTitle">{{displayName}}</span>
+  <span class="jobTitle">{{job.displayName}}</span>
   </br>
-  <span class="l_jobs"><b>{{description}}</b></span>
+  <span class="l_jobs"><b>{{job.description}}</b></span>
   </br>
-  <input type="button" value="ASSYST" onclick="listAssystFromGH('{{url}}')"/>
+  <span class="l_jobs"><b>{{version.build.date}}</b></span>
+  </br>
+  <span class="l_jobs"><b>{{version.build.number}}</b></span>
+  </br>
+  <span class="l_jobs"><b>{{version.version}}</b></span>
+  </br>
+  <span class="env_url"><a href="{{instance_url}}"  target="_blank">{{instance_name}}</a></b></span>
+  </br> 
+  </br>
+  <input type="button" value="ASSYST" onclick="listAssystFromGH('{{job.url}}')"/>
   
   <div id='builds_{{name}}'>
   	<ul>
-	{{#each builds}}
+	{{#each job.builds}}
 		<li> {{number}} - <a href="#" onclick="changeSetDetail(event,'{{url}}');">...more</a>	</li>
 			<div id='job{{../name}}build{{number}}' data-buildNumber="{{number}}">
       </div>
