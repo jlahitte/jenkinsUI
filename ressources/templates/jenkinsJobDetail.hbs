@@ -23,10 +23,10 @@
   	<ul>
 	{{#each job.builds}}
 		{{#if changes}}
-			<li  class={{success}}><div class="buildDetailList">   {{number}} - <a href="#" onclick="changeSetDetail(event,'{{url}}');" class="buildDetailLink">Voir les changements</a></div></li>
+			<li  class={{success}}><div class="buildDetailList"><a href="#" onclick="changeSetDetail(event,'{{url}}');" class="buildDetailLink">{{number}} - Voir les changements</a></div></li>
 			<div id='job{{../name}}build{{number}}' data-buildNumber="{{number}}"></div>
 		{{else}}
-			<li  class={{success}}><div class="buildDetailList">  {{number}} - Pas de changement</div></li>			
+			<li  class={{success}}><div class="buildDetailList">{{number}} - Pas de changement</div></li>			
 		{{/if}}
 	{{/each}}
 	</ul>
