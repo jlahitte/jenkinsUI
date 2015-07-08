@@ -3,6 +3,7 @@ function updateInstanceJob(url, environement) {
 		console.log("Details from job received for " + environement);
 		window.BRICODEPOT_INSTANCES[environement].job = data;
 		window.BRICODEPOT_INSTANCES[environement].job.buildItems = {};
+		window.BRICODEPOT_INSTANCES[environement].job.buildItems.callCount=0;
 		for ( var buildItemIndex in window.BRICODEPOT_INSTANCES[environement].job.builds) {
 			updateBuildItemsDetails(environement, buildItemIndex);
 		}
@@ -15,13 +16,22 @@ function updateInstanceJob(url, environement) {
 
 function updateBuildItemsDetails(environement, buildItemIndex) {
 	var buildItem = window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex];
+	
 	$.getJSON(buildItem.url + JSON_PATH).done(function(data) {
 		window.BRICODEPOT_INSTANCES[environement].job.buildItems[buildItem.number] = data;
 		if (data.changeSet.items.length >0) {
-			window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex].success = true;
-		} 
+			window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex].changes = true;
+		} else{
+			window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex].changes = false;
+		}
+		if (data.result == "SUCCESS") {
+			window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex].success = "buildSuccess";
+		} else{
+			window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex].success = "buildFail";
+		}
 	}).always(function() {
-		if((window.BRICODEPOT_INSTANCES[environement].job.builds.length -1) === parseInt(buildItemIndex)){
+		window.BRICODEPOT_INSTANCES[environement].job.buildItems.callCount=window.BRICODEPOT_INSTANCES[environement].job.buildItems.callCount+1;
+		if((window.BRICODEPOT_INSTANCES[environement].job.builds.length) === window.BRICODEPOT_INSTANCES[environement].job.buildItems.callCount){
 			displayEnvironementJobDetail(environement, window.BRICODEPOT_INSTANCES[environement]);
 		}
 	});
