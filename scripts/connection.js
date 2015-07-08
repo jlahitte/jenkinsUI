@@ -2,17 +2,34 @@ function updateInstanceJob(url, environement) {
 	$.getJSON(url).done(function(data) {
 		console.log("Details from job received for " + environement);
 		window.BRICODEPOT_INSTANCES[environement].job = data;
-		displayEnvironementJobDetail(environement, window.BRICODEPOT_INSTANCES[environement]);
+		window.BRICODEPOT_INSTANCES[environement].job.buildItems = {};
+		for ( var buildItemIndex in window.BRICODEPOT_INSTANCES[environement].job.builds) {
+			updateBuildItemsDetails(environement, buildItemIndex);
+		}
+		
 	}).fail(function(data) {
 		console.log("error " + data.status + " for bricodepot instance " + environement);
 		window.BRICODEPOT_INSTANCES[environement].job = {};
 	});
 }
 
+function updateBuildItemsDetails(environement, buildItemIndex) {
+	var buildItem = window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex];
+	$.getJSON(buildItem.url + JSON_PATH).done(function(data) {
+		window.BRICODEPOT_INSTANCES[environement].job.buildItems[buildItem.number] = data;
+		if (data.changeSet.items.length >0) {
+			window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex].success = true;
+		} 
+	}).always(function() {
+		if((window.BRICODEPOT_INSTANCES[environement].job.builds.length -1) === parseInt(buildItemIndex)){
+			displayEnvironementJobDetail(environement, window.BRICODEPOT_INSTANCES[environement]);
+		}
+	});
+}
+
 connectToBricoDepot = function() {
 	$.each(window.BRICODEPOT_INSTANCES, function(environement, instance) {
 		var url = instance.instance_url + BRICO_JSON_PATH;
-		var name = instance.instance_name;
 		console.log(url);
 		updateInstanceVertion(url, environement);
 	});

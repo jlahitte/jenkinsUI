@@ -1,15 +1,20 @@
 <div class="JobDetail text_valign-middle">
-  <span class="jobTitle">{{job.displayName}}</span>
+  <span class="jobTitle">{{instance_name}}</span>
   </br>
   <span class="l_jobs"><b>{{job.description}}</b></span>
   </br>
-  <span class="l_jobs"><b>{{version.build.date}}</b></span>
-  </br>
-  <span class="l_jobs"><b>{{version.build.number}}</b></span>
-  </br>
-  <span class="l_jobs"><b>{{version.version}}</b></span>
-  </br>
-  <span class="env_url"><a href="{{instance_url}}"  target="_blank">{{instance_name}}</a></b></span>
+  {{#if version.version}}
+	  <span class="l_jobs">Date du build : <b>{{version.build.Date}}</b></span>
+	  </br>
+	  <span class="l_jobs">Numero du build : <b>{{version.build.number}}</b></span>
+	  </br>
+	  <span class="l_jobs">Numero de version : <b>{{version.version}}</b></span>
+	  </br>
+  {{else}}
+  	<span class="error"><b>L'instance est hors ligne</b></span>
+	  </br>
+  {{/if}}
+  <span class="env_url"><a href="{{instance_url}}"  target="_blank">Lien vers l'instance</a></b></span>
   </br> 
   </br>
   <input type="button" value="ASSYST" onclick="listAssystFromGH('{{job.url}}')"/>
@@ -17,9 +22,12 @@
   <div id='builds_{{name}}'>
   	<ul>
 	{{#each job.builds}}
-		<li> {{number}} - <a href="#" onclick="changeSetDetail(event,'{{url}}');">...more</a>	</li>
-			<div id='job{{../name}}build{{number}}' data-buildNumber="{{number}}">
-      </div>
+		{{#if success}}
+			<li> {{number}} - <a href="#" onclick="changeSetDetail(event,'{{url}}');">...more</a></li>
+			<div id='job{{../name}}build{{number}}' data-buildNumber="{{number}}"></div>
+		{{else}}
+			<li> {{number}} - <span class='error'>No changes...</span></li>			
+		{{/if}}
 	{{/each}}
 	</ul>
   <div>
