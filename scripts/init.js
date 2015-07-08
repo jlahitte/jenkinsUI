@@ -15,8 +15,6 @@ $(document).ready(function() {
 
 		window.JENKINS_BRANCHES = files.branches.environnements;
 
-		window.BRICODEPOT_INSTANCES = files.instances.BRICODEPOT;
-
 		// lancement du traitement
 		connectToBricoDepot();
 		$("#assystList").hide();
