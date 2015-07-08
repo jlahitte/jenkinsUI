@@ -78,10 +78,19 @@ span.error {
 
 .buildSuccess {
   color: #258e20;
-  list-style-image: url(ressources/img/greenchecked.png);
+  list-style-image: url(greenchecked.png);
 }
 
 .buildFail {
   color: #822727;
-  list-style-image: url(ressources/img/redchecked.png);
+  font-weight:bold;
+  list-style-image: url(redchecked.png);
+}
+
+.buildDetailList {
+  vertical-align: top;
+}
+
+.buildDetailLink {
+  vertical-align: top;
 }
