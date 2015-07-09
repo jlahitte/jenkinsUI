@@ -43,7 +43,7 @@ function FRDateString(date) {
 	function pad(n) {
 		return n < 10 ? '0' + n : n;
 	}
-	return pad(date.getDate() + 1) + '/' + pad(date.getMonth()) + '/' + pad(date.getFullYear()) + ' à ' + pad(date.getHours()) + 'h' + pad(date.getMinutes());
+	return pad(date.getDate()) + '/' + pad(date.getMonth()) + '/' + pad(date.getFullYear()) + ' à ' + pad(date.getHours()) + 'h' + pad(date.getMinutes());
 }
 
 connectToBricoDepot = function() {
