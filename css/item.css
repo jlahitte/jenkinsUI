@@ -83,7 +83,6 @@ span.error {
 
 .buildFail {
   color: #822727;
-  font-weight: bold;
   list-style-image: url(redchecked.png);
 }
 
@@ -96,9 +95,15 @@ span.error {
 }
 
 .buildSuccess a:link {
+  font-weight: bold;
   color: #258e20;
 }
 
 .buildFail a:link {
+  font-weight: bold;
   color: #822727;
+}
+
+.buildDetail {
+  display: none;
 }

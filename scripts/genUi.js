@@ -79,3 +79,8 @@ openGitHub = function(url) {
 	gui.Shell.openExternal(url);
 
 };
+
+function togglechangeSetDetail(event,id){
+	event.preventDefault();
+	$( '#'+id ).toggle();
+}
