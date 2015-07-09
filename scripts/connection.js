@@ -78,5 +78,4 @@ changeSetDetail = function(event, url) {
 	$.getJSON(url + JSON_PATH).done(function(data) {
 		displayChangeSet(data);
 	});
-
 };
