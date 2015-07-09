@@ -2,8 +2,8 @@ function updateInstanceJob(url, environement) {
 	$.getJSON(url).done(function(data) {
 		console.log("Details from job received for " + environement);
 		window.JENKINS_BRANCHES[environement].job = data;
+		window.JENKINS_BRANCHES[environement].job.callCount=0;
 		window.JENKINS_BRANCHES[environement].job.buildItems = {};
-		window.JENKINS_BRANCHES[environement].job.buildItems.callCount=0;
 		for ( var buildItemIndex in window.JENKINS_BRANCHES[environement].job.builds) {
 			updateBuildItemsDetails(environement, buildItemIndex);
 		}
@@ -18,7 +18,9 @@ function updateBuildItemsDetails(environement, buildItemIndex) {
 	var buildItem = window.JENKINS_BRANCHES[environement].job.builds[buildItemIndex];
 	
 	$.getJSON(buildItem.url + JSON_PATH).done(function(data) {
-		window.JENKINS_BRANCHES[environement].job.buildItems[buildItem.number] = data;
+		window.JENKINS_BRANCHES[environement].job.builds[buildItemIndex].buildDetail={};
+		window.JENKINS_BRANCHES[environement].job.builds[buildItemIndex].buildDetail=data;
+		
 		if (data.changeSet.items.length >0) {
 			window.JENKINS_BRANCHES[environement].job.builds[buildItemIndex].changes = true;
 		} else{
@@ -30,8 +32,8 @@ function updateBuildItemsDetails(environement, buildItemIndex) {
 			window.JENKINS_BRANCHES[environement].job.builds[buildItemIndex].success = "buildFail";
 		}
 	}).always(function() {
-		window.JENKINS_BRANCHES[environement].job.buildItems.callCount=window.JENKINS_BRANCHES[environement].job.buildItems.callCount+1;
-		if((window.JENKINS_BRANCHES[environement].job.builds.length) === window.JENKINS_BRANCHES[environement].job.buildItems.callCount){
+		window.JENKINS_BRANCHES[environement].job.callCount=window.JENKINS_BRANCHES[environement].job.callCount+1;
+		if((window.JENKINS_BRANCHES[environement].job.builds.length) === window.JENKINS_BRANCHES[environement].job.callCount){
 			displayEnvironementJobDetail(environement, window.JENKINS_BRANCHES[environement]);
 		}
 	});

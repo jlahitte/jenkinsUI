@@ -102,3 +102,7 @@ span.error {
 .buildFail a:link {
   color: #822727;
 }
+
+.buildDetail {
+  display: none;
+}
