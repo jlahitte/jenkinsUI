@@ -16,22 +16,27 @@ function updateInstanceJob(url, environement) {
 function updateBuildItemsDetails(environement, buildItemIndex) {
 	var buildItem = window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex];
 
-	$.getJSON(buildItem.url + JSON_PATH).done(function(data) {
-		window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex].buildDetail = {};
-		window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex].buildDetail = data;
-
-		if (data.changeSet.items.length > 0) {
-			window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex].changes = true;
-		} else {
-			window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex].changes = false;
-		}
-		if (data.result == "SUCCESS") {
-			window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex].success = "buildSuccess";
-		} else {
-			window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex].success = "buildFail";
-		}
-		window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex].buildDate = FRDateString(new Date(data.timestamp));
-	}).always(function() {
+	$.getJSON(buildItem.url + JSON_PATH).done(
+			function(data) {
+				window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex].buildDetail = {};
+				window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex].buildDetail = data;
+				if (window.BRICODEPOT_INSTANCES[environement].version.build
+						&& window.BRICODEPOT_INSTANCES[environement].version.build.number == window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex].buildDetail.id) {
+					window.BRICODEPOT_INSTANCES[environement].version.build.Date = FRDateString(new Date(
+							window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex].buildDetail.timestamp));
+				}
+				if (data.changeSet.items.length > 0) {
+					window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex].changes = true;
+				} else {
+					window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex].changes = false;
+				}
+				if (data.result == "SUCCESS") {
+					window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex].success = "buildSuccess";
+				} else {
+					window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex].success = "buildFail";
+				}
+				window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex].buildDate = FRDateString(new Date(data.timestamp));
+			}).always(function() {
 		window.BRICODEPOT_INSTANCES[environement].job.callCount = window.BRICODEPOT_INSTANCES[environement].job.callCount + 1;
 		if ((window.BRICODEPOT_INSTANCES[environement].job.builds.length) === window.BRICODEPOT_INSTANCES[environement].job.callCount) {
 			displayEnvironementJobDetail(environement, window.BRICODEPOT_INSTANCES[environement]);
