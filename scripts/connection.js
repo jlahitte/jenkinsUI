@@ -2,8 +2,7 @@ function updateInstanceJob(url, environement) {
 	$.getJSON(url).done(function(data) {
 		console.log("Details from job received for " + environement);
 		window.BRICODEPOT_INSTANCES[environement].job = data;
-		window.BRICODEPOT_INSTANCES[environement].job.buildItems = {};
-		window.BRICODEPOT_INSTANCES[environement].job.buildItems.callCount=0;
+		window.BRICODEPOT_INSTANCES[environement].job.callCount=0;
 		for ( var buildItemIndex in window.BRICODEPOT_INSTANCES[environement].job.builds) {
 			updateBuildItemsDetails(environement, buildItemIndex);
 		}
@@ -18,7 +17,9 @@ function updateBuildItemsDetails(environement, buildItemIndex) {
 	var buildItem = window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex];
 	
 	$.getJSON(buildItem.url + JSON_PATH).done(function(data) {
-		window.BRICODEPOT_INSTANCES[environement].job.buildItems[buildItem.number] = data;
+		window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex].buildDetail={};
+		window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex].buildDetail=data;
+		
 		if (data.changeSet.items.length >0) {
 			window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex].changes = true;
 		} else{
@@ -30,8 +31,8 @@ function updateBuildItemsDetails(environement, buildItemIndex) {
 			window.BRICODEPOT_INSTANCES[environement].job.builds[buildItemIndex].success = "buildFail";
 		}
 	}).always(function() {
-		window.BRICODEPOT_INSTANCES[environement].job.buildItems.callCount=window.BRICODEPOT_INSTANCES[environement].job.buildItems.callCount+1;
-		if((window.BRICODEPOT_INSTANCES[environement].job.builds.length) === window.BRICODEPOT_INSTANCES[environement].job.buildItems.callCount){
+		window.BRICODEPOT_INSTANCES[environement].job.callCount=window.BRICODEPOT_INSTANCES[environement].job.callCount+1;
+		if((window.BRICODEPOT_INSTANCES[environement].job.builds.length) === window.BRICODEPOT_INSTANCES[environement].job.callCount){
 			displayEnvironementJobDetail(environement, window.BRICODEPOT_INSTANCES[environement]);
 		}
 	});
@@ -65,16 +66,3 @@ builds = function(url) {
 		console.log("Detail for build logged " + data.displayName);
 	});
 }
-
-// Get a list of changes for a particular build
-// and display them as per defined within genUi.js--> displayChangeSet()
-// url : url to the detail of the build
-changeSetDetail = function(event, url) {
-	// Désactivation du comportement du lien par defaut
-	// Provoquait un retour en haut de page
-	event.preventDefault();
-	$.getJSON(url + JSON_PATH).done(function(data) {
-		displayChangeSet(data);
-	});
-
-};
