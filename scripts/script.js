@@ -9,7 +9,7 @@ $(main = function() {
 	// ////////////////////////
 	// List all jobs
 	// //////////////////////
-	$.getJSON(JENKINS_URL + JSON_PATH)
+	$.getJSON(JENKINS_URL + JENKINS_JSON_PATH)
 	 .done(function(data) {
 		 	console.log("done");
 		 	jobs = getJobsData(data, function() {
@@ -47,7 +47,7 @@ $(main = function() {
 	};
 
 	getJobDetail = function(job) {
-		var url = job.url + JSON_PATH;
+		var url = job.url + JENKINS_JSON_PATH;
 		$.getJSON(url, function(data) {
 			// job.detail = data;
 			jobs[job.id].detail = data;

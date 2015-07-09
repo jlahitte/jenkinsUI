@@ -1,13 +1,16 @@
 var github = require('octonode');
 var client;
+var ghrepo;
 var COMMITS_LIST = [];
-authenticate = function(accessToken) {
-	client = github.client(accessToken);
-	client.requestDefaults['proxy'] = 'http://lahitte_j:Mois06@95.172.74.3:80'
+var assystPattern = new RegExp(/\d{6}/);
+var compareEnvPattern = new RegExp(/compare\/([^.]+)/);
+authenticate = function() {
+	client = github.client(window.GITHUB_TOKEN);
+	client.requestDefaults['proxy'] = 'http://tlati_m:Abrico@95.172.74.3:80';
+	ghrepo = client.repo('BRICODEPOT/DEPOT_JAVA');
 }
 
 getCommits = function(branchId) {
-	var ghrepo = client.repo('BRICODEPOT/DEPOT_JAVA');
 	if (branchId) {
 		ghrepo.commits({
 			"sha" : branchId
@@ -16,11 +19,11 @@ getCommits = function(branchId) {
 				console.log(err);
 			} else {
 				console.log("nbr Commits : " + data.length);
-				
-				//On regarde le contenu des commits 
+
+				// On regarde le contenu des commits
 				// et on place les ASSYST dans window.ASSYST_HASHMAP
 				var dataLength = data.length;
-				for(var i = 0; i < dataLength; i++){
+				for (var i = 0; i < dataLength; i++) {
 					countASSYST(data[i].commit.message);
 				}
 				displayAssyst(data);
@@ -32,11 +35,11 @@ getCommits = function(branchId) {
 				console.log(err);
 			} else {
 				console.log("nbr Commits : " + data.length);
-				
-				//On regarde le contenu des commits 
+
+				// On regarde le contenu des commits
 				// et on place les ASSYST dans window.ASSYST_HASHMAP
 				var dataLength = data.length;
-				for(var i = 0; i < dataLength; i++){
+				for (var i = 0; i < dataLength; i++) {
 					countASSYST(data[i].commit.message);
 				}
 				displayAssyst(data);
@@ -44,30 +47,56 @@ getCommits = function(branchId) {
 		});
 	}
 }
-listCommits = function(accessToken, branchId) {
-	authenticate(accessToken);
-	getCommits(branchId);
 
+listCommits = function(branchId) {
+	getCommits(branchId);
+	compareBranche(branchId);
 }
 
-jenkinsJobUrlToGHBranch = function(url){
-	var branchSize =  window.JENKINS_BRANCHES.length;
-	if (branchSize > 0 ){
-		for (var i = 0 ; i < branchSize;i++){
-			var urlBranch = window.JENKINS_BRANCHES[i].branch_url;
-			if (urlBranch == url){
-				return window.JENKINS_BRANCHES[i].branch_name;
-			} 
-		}
+function compareBranche(branchId) {
+	if (window.ASSYST_LIST) {
+		$.each(window.ASSYST_LIST, function(assyst, entry) {
+			ghrepo.compareCommits(branchId, entry.name, compareBrancheCallback);
+		});
 	}
 }
-// var ghme = client.me();
-// var ghuser = client.user('pksunkara');
-// var ghrepo = client.repo('pksunkara/hub');
-// var ghorg = client.org('flatiron');
-// var ghissue = client.issue('pksunkara/hub', 37);
-// var ghmilestone = client.milestone('pksunkara/hub', 37);
-// var ghlabel = client.label('pksunkara/hub', 'todo');
-// var ghpr = client.pr('pksunkara/hub', 37);
-// var ghgist = client.gist();
-// var ghteam = client.team(37);
+
+function listBrancheCallback(err, body, headers) {
+
+	window.ASSYST_LIST = {};
+	if (err) {
+		console.log("listBrancheCallback error : " + err);
+		return;
+	}
+	if (body) {
+		body.forEach(function(entry) {
+			if (assystPattern.test(entry.name)) {
+				window.ASSYST_LIST[assystPattern.exec(entry.name)[0]] = entry;
+				console.log(entry.name);
+			}
+		});
+	}
+}
+
+function compareBrancheCallback(err, body, headers) {
+	if (err) {
+		console.log("compareBrancheCallback error : " + err);
+		return;
+	}
+	if (body) {
+		var assyst = window.assystPattern.exec(body.url)[0];
+		var branch = window.compareEnvPattern.exec(body.url)[1];
+		$.each(window.JENKINS_BRANCHES, function(env, entry) {
+			if(entry.branch_name==branch){
+				if(entry.ASSYST_LIST){
+					entry.ASSYST_LIST[assyst]=body;
+				}else{
+					entry.ASSYST_LIST={};
+					entry.ASSYST_LIST[assyst]=body;
+				}
+			}
+
+		});
+		
+	}
+}

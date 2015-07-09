@@ -5,7 +5,7 @@ detailForBuild = function(urlB) {
 	return $.getJSON(urlB);
 }
 
-// Detecte les num�ros d'assyst et les stock dans la table ASSYST_HASHMAP
+// Detecte les numéros d'assyst et les stock dans la table ASSYST_HASHMAP
 countASSYST = function(comment) {
 	var re = /(\d{6})/g;
 	var str = comment;
@@ -30,8 +30,8 @@ countASSYST = function(comment) {
 }
 
 listAssystFor = function(url) {
-	console.log("ASSYST pour : " + url + JSON_PATH);
-	$.getJSON(url + JSON_PATH).done(function(data) {
+	console.log("ASSYST pour : " + url + JENKINS_JSON_PATH);
+	$.getJSON(url + JENKINS_JSON_PATH).done(function(data) {
 		var builds = [];
 		var maxBuild = BUILD_HISTORY_MAX;
 		// Cas des jobs avec peux de build
@@ -40,7 +40,7 @@ listAssystFor = function(url) {
 		}
 		for (var j = 0; j < maxBuild; j++) {
 			var b = data.builds[j];
-			var urlToLaunch = b.url + JSON_PATH;
+			var urlToLaunch = b.url + JENKINS_JSON_PATH;
 			builds.push(detailForBuild(urlToLaunch));
 		}
 		$.when.apply(this, builds).then(function() {
@@ -56,17 +56,14 @@ listAssystFor = function(url) {
 			}
 			
 			displayListOfAssyst();
-			console.log("ASSYST(s) trouv�(s) : " + ASSYST_HASHMAP.length);
+			console.log("ASSYST(s) trouvé(s) : " + ASSYST_HASHMAP.length);
 			ASSYST_HASHMAP = [];
 		})
 	});
 
 }
 
-listAssystFromGH = function(url) {
-	var branchId = jenkinsJobUrlToGHBranch(url);
-	listCommits(window.GITHUB_TOKEN,branchId);
+listAssystFromGH = function(branchId) {
+	listCommits(branchId);
 }
-
-
 

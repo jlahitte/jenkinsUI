@@ -12,11 +12,9 @@ $(document).ready(function() {
 		console.log("Conf file :" + githubFcfg);
 		window.GITHUB_URL = githubFcfg.get('github.url');
 		window.GITHUB_TOKEN = githubFcfg.get('authentification.token');
-
 		window.JENKINS_BRANCHES = files.branches.environnements;
-
-		window.BRICODEPOT_INSTANCES = files.instances.BRICODEPOT;
-
+		authenticate();
+		ghrepo.branches(listBrancheCallback);	
 		// lancement du traitement
 		connectToBricoDepot();
 		$("#assystList").hide();

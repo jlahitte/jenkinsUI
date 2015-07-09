@@ -14,10 +14,10 @@
   	<span class="error"><b>L'instance est hors ligne</b></span>
 	  </br>
   {{/if}}
-  <span class="env_url"><a href="{{instance_url}}"  target="_blank" rel="external">Lien vers l'instance</a></b></span>
+  <span class="env_url"><a href="{{url}}"  target="_blank" rel="external">Lien vers l'instance</a></b></span>
   </br> 
   </br>
-  <input type="button" value="ASSYST" onclick="listAssystFromGH('{{job.url}}')"/>
+  <input type="button" value="ASSYST" onclick="listAssystFromGH('{{branch_name}}')"/>
   
   <div id='builds_{{name}}'>
   	<ul>
