@@ -95,3 +95,21 @@ function togglechangeSetDetail(event, id) {
 	event.preventDefault();
 	$('#' + id).toggle();
 }
+
+function launchUnderIE(url){
+	var exec = require('child_process').exec,
+    child;
+
+child = exec('\"C:\\Program\ Files\\Internet\ Explorer\\iexplore.exe\" ' + url,
+  function (error, stdout, stderr) {
+    if (stdout !==null){
+	console.log('D�marrage du lien dans IE : ' + stdout);
+    }
+    if (stderr !==null){}
+    console.log("Erreur lors de l'ouverture de l'url dans IE: " + stderr);	
+	}
+    if (error !== null) {
+      console.log('exec error: ' + error);
+    }
+});
+}
