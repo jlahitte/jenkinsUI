@@ -1,7 +1,6 @@
 var github = require('octonode');
 var client;
 var ghrepo;
-var COMMITS_LIST = [];
 var assystPattern = new RegExp(/\d{6}/);
 var compareEnvPattern = new RegExp(/compare\/([^.]+)/);
 
@@ -14,16 +13,16 @@ authenticate = function() {
 function compareBranche(branchId) {
 	if (window.ASSYST_LIST) {
 		$.each(window.ASSYST_LIST, function(assyst, entry) {
-			ghrepo.compareCommits(window.JENKINS_BRANCHES[branchId].version.git.commit, entry.commit.sha, compareBrancheCallback, branchId, entry.name);
+			ghrepo.compareCommits(window.BRICO_ENVIRONEMENT[branchId].version.git.commit, entry.commit.sha, compareBrancheCallback, branchId, entry.name);
 		});
 	}
 }
 
-function listBrancheCallback(err, body, headers) {
+function listAllAssyts(err, body, headers) {
 
 	window.ASSYST_LIST = {};
 	if (err) {
-		console.log("listBrancheCallback error : " + err);
+		console.log("listAllAssyts error : " + err);
 		return;
 	}
 	if (body) {
@@ -34,7 +33,7 @@ function listBrancheCallback(err, body, headers) {
 			}
 		});
 
-		$.each(window.JENKINS_BRANCHES, function(branchId, entry) {
+		$.each(window.BRICO_ENVIRONEMENT, function(branchId, entry) {
 			if (branchId != "PRD") {
 				compareBranche(branchId);
 			}
@@ -52,8 +51,7 @@ function compareBrancheCallback(err, body, headers, branch, assyst) {
 	}
 	if (body) {
 		var assystNumber = window.assystPattern.exec(assyst)[0];
-		// var branch = window.compareEnvPattern.exec(body.url)[1];
-		$.each(window.JENKINS_BRANCHES, function(env, entry) {
+		$.each(window.BRICO_ENVIRONEMENT, function(env, entry) {
 			if (entry.branch_name == branch) {
 				if (window.ASSYST_LIST) {
 					window.ASSYST_LIST[assystNumber][branch] = {};
@@ -66,5 +64,37 @@ function compareBrancheCallback(err, body, headers, branch, assyst) {
 				}
 			}
 		});
+	}
+}
+
+function dr1CommitsListCallback(err, body, headers) {
+	environementCommitsListCallback(err, body, headers, "DR1");
+}
+
+function pp2CommitsListCallback(err, body, headers) {
+	environementCommitsListCallback(err, body, headers, "PP2");
+}
+
+function ir1CommitsListCallback(err, body, headers) {
+	environementCommitsListCallback(err, body, headers, "IR1");
+}
+
+function prdCommitsListCallback(err, body, headers) {
+	environementCommitsListCallback(err, body, headers, "PRD");
+}
+
+function environementCommitsListCallback(err, body, headers, env) {
+	if (err) {
+		console.log("environementCommitsListCallback error : " + err);
+		return;
+	}
+	if (body) {
+		if (window.BRICO_ENVIRONEMENT[env].commitList) {
+			window.BRICO_ENVIRONEMENT[env].commitList = window.BRICO_ENVIRONEMENT[env].commitList.concat(body);
+		} else {
+			window.BRICO_ENVIRONEMENT[env].commitList = [];
+			window.BRICO_ENVIRONEMENT[env].commitList = body;
+		}
+
 	}
 }
