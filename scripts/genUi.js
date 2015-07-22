@@ -105,7 +105,7 @@ child = exec('\"C:\\Program\ Files\\Internet\ Explorer\\iexplore.exe\" ' + url,
     if (stdout !==null){
 	console.log('Démarrage du lien dans IE : ' + stdout);
     }
-    if (stderr !==null){}
+    if (stderr !==null){
     console.log("Erreur lors de l'ouverture de l'url dans IE: " + stderr);	
 	}
     if (error !== null) {
