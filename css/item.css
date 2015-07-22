@@ -74,6 +74,18 @@ span.error {
 
 .assystItem {
   text-shadow: gray;
+  color: black;
+  
+}
+
+.assystItemUpToDate {
+  text-shadow: gray;
+  color: green;
+}
+
+.assystItemChanged {
+  text-shadow: gray;
+  color: red;
 }
 
 .buildSuccess {

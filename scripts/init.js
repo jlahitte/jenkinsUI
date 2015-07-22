@@ -13,6 +13,11 @@ $(document).ready(function() {
 		window.GITHUB_URL = githubFcfg.get('github.url');
 		window.GITHUB_TOKEN = githubFcfg.get('authentification.token');
 		window.JENKINS_BRANCHES = files.branches.environnements;
+
+		var proxyFcfg = files.proxy;
+		window.PROXY_USER = proxyFcfg.get('proxy.user');
+		window.PROXY_PASS = proxyFcfg.get('proxy.pass');
+		window.PROXY_IP = proxyFcfg.get('proxy.ip');
 		authenticate();
 		ghrepo.branches(listBrancheCallback);	
 		// lancement du traitement

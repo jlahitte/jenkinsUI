@@ -61,12 +61,23 @@ displayJobLastCommit = function(commit) {
 	aSpan.render('commit', lastCommit);
 }
 
-displayAssyst = function(data) {
+listAssystFromGH = function(env) {
 	var boxListAssyst = $("#assystList");
-	boxListAssyst.html("");
-	for ( var i in ASSYST_HASHMAP) {
-		boxListAssyst.append("<span class='assystItem'>" + i + "</span> </br>");
-	}
+	boxListAssyst.html("");	
+	boxListAssyst.append("<div class='assystItem'>sur l'environement <b>"+ env + "</b></div>");
+	boxListAssyst.append("<div class='assystItem'><ul>");
+	boxListAssyst.append("<li class='assystItemChanged'>des modifications sont en cours pour cette assyst et non present sur l'environement</li>");
+	boxListAssyst.append("<li class='assystItemUpToDate'>l'environement est à jours pour cette assyst</span></li>");
+	boxListAssyst.append("</ul></div>");
+	boxListAssyst.append("<ul>");
+	$.each(window.ASSYST_LIST, function(assyst, entry) {
+		if (window.ASSYST_LIST[assyst][env].ahead_by > 0) {
+			boxListAssyst.append("<li class='assystItemChanged'><b>" + window.ASSYST_LIST[assyst].name + "</b></li>");
+		} else {
+			boxListAssyst.append("<li class='assystItemUpToDate'><b>" + window.ASSYST_LIST[assyst].name  + "</b></span> </li>");
+		}
+	});
+	boxListAssyst.append("</ul>");
 	boxListAssyst.show();
 
 	ASSYST_HASHMAP = [];
@@ -80,7 +91,7 @@ openGitHub = function(url) {
 
 };
 
-function togglechangeSetDetail(event,id){
+function togglechangeSetDetail(event, id) {
 	event.preventDefault();
-	$( '#'+id ).toggle();
+	$('#' + id).toggle();
 }

@@ -10,13 +10,14 @@ h1, h2, h3 {
 	position: fixed;
 	right: 10px;
 	top: 10px;
+	width: 350px;
 }
 .innerFixedBox {
 	position: fixed;
 	right: 10px;
 	top: 46px;
-	height: 165px;
-	width: 150px;
+	height: 400px;
+	width: 350px;
 }
 
 .TitreTableCell {
@@ -29,13 +30,13 @@ h1, h2, h3 {
 	padding-right: 10px;
 	padding-top: 5px;
 	padding-bottom: 5px;
-	width: 150px;
+	width: 350px;
 	text-align: center;
 }
 
 .sizeBox {
-	height: 200px;
-	width: 150px;
+	height: 400px;
+	width: 350px;
 }
 
 .listFixBox {
@@ -48,5 +49,5 @@ h1, h2, h3 {
 	padding-right: 10px;
 	padding-top: 10px;
 	padding-bottom: 5px;
-	width: 150px;
+	width: 350px;
 }

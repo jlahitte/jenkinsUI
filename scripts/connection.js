@@ -2,12 +2,12 @@ function updateInstanceJob(url, environement) {
 	$.getJSON(url).done(function(data) {
 		console.log("Details from job received for " + environement);
 		window.JENKINS_BRANCHES[environement].job = data;
-		window.JENKINS_BRANCHES[environement].job.callCount=0;
+		window.JENKINS_BRANCHES[environement].job.callCount = 0;
 		window.JENKINS_BRANCHES[environement].job.buildItems = {};
 		for ( var buildItemIndex in window.JENKINS_BRANCHES[environement].job.builds) {
 			updateBuildItemsDetails(environement, buildItemIndex);
 		}
-		
+
 	}).fail(function(data) {
 		console.log("error " + data.status + " for bricodepot instance " + environement);
 		window.JENKINS_BRANCHES[environement].job = {};
@@ -16,7 +16,7 @@ function updateInstanceJob(url, environement) {
 
 function updateBuildItemsDetails(environement, buildItemIndex) {
 	var buildItem = window.JENKINS_BRANCHES[environement].job.builds[buildItemIndex];
-	
+
 	$.getJSON(buildItem.url + JENKINS_JSON_PATH).done(
 			function(data) {
 				window.JENKINS_BRANCHES[environement].job.builds[buildItemIndex].buildDetail = {};
@@ -38,9 +38,10 @@ function updateBuildItemsDetails(environement, buildItemIndex) {
 				}
 				window.JENKINS_BRANCHES[environement].job.builds[buildItemIndex].buildDate = FRDateString(new Date(data.timestamp));
 			}).always(function() {
-		window.JENKINS_BRANCHES[environement].job.callCount=window.JENKINS_BRANCHES[environement].job.callCount+1;
-		if((window.JENKINS_BRANCHES[environement].job.builds.length) === window.JENKINS_BRANCHES[environement].job.callCount){
+		window.JENKINS_BRANCHES[environement].job.callCount = window.JENKINS_BRANCHES[environement].job.callCount + 1;
+		if ((window.JENKINS_BRANCHES[environement].job.builds.length) === window.JENKINS_BRANCHES[environement].job.callCount) {
 			displayEnvironementJobDetail(environement, window.JENKINS_BRANCHES[environement]);
+			
 		}
 	});
 }

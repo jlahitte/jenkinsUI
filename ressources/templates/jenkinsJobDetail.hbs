@@ -1,7 +1,7 @@
 <div class="JobDetail text_valign-middle">
-  <span class="jobTitle">{{instance_name}}</span>
+  <span class="jobTitle">{{id}}</span>
   </br>
-  <span class="l_jobs"><b>{{job.description}}</b></span>
+  <span class="l_jobs">code de la branche github <b>{{branch_name}}</b> deployé sur l'environement <b>{{id}}</b></span>
   </br>
   {{#if version.version}}
 	  <span class="l_jobs">Date du build : <b>{{version.build.Date}}</b></span>
@@ -40,6 +40,4 @@
 	{{/each}}
 	</ul>
   <div>
-
-
 </div>
