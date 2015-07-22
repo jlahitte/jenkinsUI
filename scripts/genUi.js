@@ -103,7 +103,7 @@ function launchUnderIE(url){
 child = exec('\"C:\\Program\ Files\\Internet\ Explorer\\iexplore.exe\" ' + url,
   function (error, stdout, stderr) {
     if (stdout !==null){
-	console.log('Démarrage du lien dans IE : ' + stdout);
+	console.log('DÃ©marrage du lien dans IE : ' + stdout);
     }
     if (stderr !==null){
     console.log("Erreur lors de l'ouverture de l'url dans IE: " + stderr);	
