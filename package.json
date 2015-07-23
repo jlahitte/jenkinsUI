@@ -9,6 +9,15 @@
     "request": "^2.54.0"
   },
   "version": "0.0.1",
+  "window": {
+	"icon": "ressources/img/bricolage_icon.png",
+	"title": "Jenkins UI",
+	"toolbar": true,
+	"width": 1280,
+	"height": 1280,
+	"frame": true,
+	"position": "mouse",
+	"resizable": false},
   "description": "Jenkins UI",
   "devDependencies": {},
   "scripts": {
