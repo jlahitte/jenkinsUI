@@ -32,7 +32,7 @@ function initAsstsytList() {
 }
 
 function initEnvironementCommitsList() {
-	for (var index = 1; index <= 3; index++) {
+	for (var index = 1; index <= 9; index++) {
 
 		ghrepo.commits({
 			sha : "DR1",
