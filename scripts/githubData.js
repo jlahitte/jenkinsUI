@@ -34,12 +34,7 @@ function listAllAssyts(err, body, headers) {
 		});
 
 		$.each(window.BRICO_ENVIRONEMENT, function(branchId, entry) {
-			if (branchId != "PRD") {
-				compareBranche(branchId);
-			}
-			$.each(window.ASSYST_LIST, function(assyst, entry) {
-				ghrepo.compareCommits("master", entry.commit.sha, compareBrancheCallback, "master", entry.name);
-			});
+			compareBranche(branchId);
 		});
 	}
 }
@@ -52,15 +47,15 @@ function compareBrancheCallback(err, body, headers, branch, assyst) {
 	if (body) {
 		var assystNumber = window.assystPattern.exec(assyst)[0];
 		$.each(window.BRICO_ENVIRONEMENT, function(env, entry) {
-			if (entry.branch_name == branch) {
+			if (entry.id == branch) {
 				if (window.ASSYST_LIST) {
-					window.ASSYST_LIST[assystNumber][branch] = {};
-					window.ASSYST_LIST[assystNumber][branch] = body;
+					window.ASSYST_LIST[assystNumber][env] = {};
+					window.ASSYST_LIST[assystNumber][env] = body;
 				} else {
 					window.ASSYST_LIST = {};
 					window.ASSYST_LIST[assystNumber] = {};
-					window.ASSYST_LIST[assystNumber][branch] = {};
-					window.ASSYST_LIST[assystNumber][branch] = body;
+					window.ASSYST_LIST[assystNumber][env] = {};
+					window.ASSYST_LIST[assystNumber][env] = body;
 				}
 			}
 		});
@@ -97,4 +92,22 @@ function environementCommitsListCallback(err, body, headers, env) {
 		}
 
 	}
+}
+
+function environementContainsAssyst(environement, assytNumber) {
+
+	for (index = 0; index < window.BRICO_ENVIRONEMENT[environement].commitList.length; index++) {
+		if (messageContainsAssyst(window.BRICO_ENVIRONEMENT[environement].commitList[index].commit.message, assytNumber)) {
+			return true;
+		}
+	}
+	return false;
+
+}
+
+function messageContainsAssyst(message, assytNumber) {
+	if (assystPattern.test(message)) {
+		return (assystPattern.exec(message)[0] == assytNumber);
+	}
+	return false;
 }

@@ -63,25 +63,27 @@ displayJobLastCommit = function(commit) {
 
 listAssystFromGH = function(env) {
 	var boxListAssyst = $("#assystList");
-	boxListAssyst.html("");	
-	boxListAssyst.append("<div class='assystItem'>sur l'environement <b>"+ env + "</b></div>");
-	boxListAssyst.append("<div class='assystItem'><ul>");
-	boxListAssyst.append("<li class='assystItemChanged'>des modifications sont en cours pour cette assyst et non present sur l'environement</li>");
-	boxListAssyst.append("<li class='assystItemUpToDate'>l'environement est à jours pour cette assyst</span></li>");
-	boxListAssyst.append("</ul></div>");
-	boxListAssyst.append("<ul>");
+	boxListAssyst.html("");
+	boxListAssyst.append("<div>sur l'environement <b>" + env + "</b></div>");
+	boxListAssyst.append("<div><ul>");
 	$.each(window.ASSYST_LIST, function(assyst, entry) {
-		if (window.ASSYST_LIST[assyst][env].ahead_by > 0) {
-			boxListAssyst.append("<li class='assystItemChanged'><b>" + window.ASSYST_LIST[assyst].name + "</b></li>");
+		if (environementContainsAssyst(env, assyst)) {
+			if (window.ASSYST_LIST[assyst][env].ahead_by > 0) {
+				boxListAssyst.append("<li class='assystItemChanged'><b>" + window.ASSYST_LIST[assyst].name + "</b></li>");
+			} else {
+				boxListAssyst.append("<li class='assystItemUpToDate'><b>" + window.ASSYST_LIST[assyst].name + "</b></span> </li>");
+			}
 		} else {
-			boxListAssyst.append("<li class='assystItemUpToDate'><b>" + window.ASSYST_LIST[assyst].name  + "</b></span> </li>");
+			boxListAssyst.append("<li class='assystItem'><b>" + window.ASSYST_LIST[assyst].name + "</b></span> </li>");
 		}
 	});
-	boxListAssyst.append("</ul>");
+	boxListAssyst.append("</ul></div>");
+	boxListAssyst.append("<div><ul>");
+	boxListAssyst.append("<li class='assystItem'>l'environement ne contient pas cette assyst</span></li>");
+	boxListAssyst.append("<li class='assystItemUpToDate'>l'environement est à jours pour cette assyst</span></li>");
+	boxListAssyst.append("<li class='assystItemChanged'>des modifications sont en cours pour cette assyst et non present sur l'environement</li>");
+	boxListAssyst.append("</ul></div>");
 	boxListAssyst.show();
-
-	ASSYST_HASHMAP = [];
-
 }
 openGitHub = function(url) {
 	var gui = require('nw.gui');
@@ -96,20 +98,18 @@ function togglechangeSetDetail(event, id) {
 	$('#' + id).toggle();
 }
 
-function launchUnderIE(url){
-	var exec = require('child_process').exec,
-    child;
+function launchUnderIE(url) {
+	var exec = require('child_process').exec, child;
 
-child = exec('\"C:\\Program\ Files\\Internet\ Explorer\\iexplore.exe\" ' + url,
-  function (error, stdout, stderr) {
-    if (stdout !==null){
-	console.log('D�marrage du lien dans IE : ' + stdout);
-    }
-    if (stderr !==null){
-    console.log("Erreur lors de l'ouverture de l'url dans IE: " + stderr);	
-	}
-    if (error !== null) {
-      console.log('exec error: ' + error);
-    }
-});
+	child = exec('\"C:\\Program\ Files\\Internet\ Explorer\\iexplore.exe\" ' + url, function(error, stdout, stderr) {
+		if (stdout !== null) {
+			console.log('D�marrage du lien dans IE : ' + stdout);
+		}
+		if (stderr !== null) {
+			console.log("Erreur lors de l'ouverture de l'url dans IE: " + stderr);
+		}
+		if (error !== null) {
+			console.log('exec error: ' + error);
+		}
+	});
 }
