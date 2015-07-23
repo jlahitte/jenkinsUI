@@ -1,6 +1,6 @@
 {
   "name": "jenkinsUI",
-  "main": "index.html",
+  "main": "indexBootStrap.html",
   "dependencies": {
     "chalk": "^1.0.0",
     "handlebars": "^3.0.1",
