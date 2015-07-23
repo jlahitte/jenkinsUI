@@ -69,7 +69,7 @@ listAssystFromGH = function(env) {
 	$.each(window.ASSYST_LIST, function(assyst, entry) {
 		if (environementContainsAssyst(env, assyst)) {
 			if (window.ASSYST_LIST[assyst][env].ahead_by > 0) {
-				boxListAssyst.append("<li class='assystItemChanged'><b>" + window.ASSYST_LIST[assyst].name + "</b></li>");
+				boxListAssyst.append("<li class='assystItemChanged'><b>" + window.ASSYST_LIST[assyst].name + "</b> ("+window.ASSYST_LIST[assyst][env].ahead_by+")</li>");
 			} else {
 				boxListAssyst.append("<li class='assystItemUpToDate'><b>" + window.ASSYST_LIST[assyst].name + "</b></span> </li>");
 			}
@@ -81,7 +81,7 @@ listAssystFromGH = function(env) {
 	boxListAssyst.append("<div><ul>");
 	boxListAssyst.append("<li class='assystItem'>l'environement ne contient pas cette assyst</span></li>");
 	boxListAssyst.append("<li class='assystItemUpToDate'>l'environement est à jours pour cette assyst</span></li>");
-	boxListAssyst.append("<li class='assystItemChanged'>des modifications sont en cours pour cette assyst et non present sur l'environement</li>");
+	boxListAssyst.append("<li class='assystItemChanged'>(n) modifications, pour cette assyst, non present sur l'environement</li>");
 	boxListAssyst.append("</ul></div>");
 	boxListAssyst.show();
 }
