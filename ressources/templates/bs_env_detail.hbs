@@ -1,0 +1,19 @@
+<span class="jobTitle">{{id}}</span>
+  </br>
+  <span class="l_jobs">code de la branche github <b>{{branch_name}}</b> deployé sur l'environement <b>{{id}}</b></span>
+  </br>
+  {{#if version.version}}
+	  <span class="l_jobs">Date du build : <b>{{version.build.Date}}</b></span>
+	  </br>
+	  <span class="l_jobs">Numero du build : <b>{{version.build.number}}</b></span>
+	  </br>
+	  <span class="l_jobs">Numero de version : <b>{{version.version}}</b></span>
+	  </br>
+  {{else}}
+  	<span class="error"><b>L'instance est hors ligne</b></span>
+	  </br>
+  {{/if}}
+  <span class="env_url"><a href="#" onclick="launchUnderIE('{{url}}');">Lien vers l'instance</a></b></span>
+  </br> 
+  </br>
+  <input type="button" value="ASSYST" onclick="listAssystFromGH('{{branch_name}}')"/>

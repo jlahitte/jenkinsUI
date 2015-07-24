@@ -1,0 +1,18 @@
+<div class='assystItem'>sur l'environnement <b> env </b></div>
+<div class='assystItem'><h4>"
+
+<ul>
+<li><span class='label label-default'>des modifications sont en cours pour cette assyst et non present sur l'environement</span></li>
+<li><span class='label label-success'>l'environement est Ã  jours pour cette assyst</span></li>
+</ul>
+</h4>
+<h6>
+	{{#each ASSYST_LIST}}
+		{{if ASSYST_LIST.ahead_by > 0}}
+			boxListAssyst.append("<span class='label label-success'>" + window.ASSYST_LIST[assyst].name + "</span>");
+		 {{else}}
+			boxListAssyst.append("<span class='label label-default'>" + window.ASSYST_LIST[assyst].name  + "</span>");
+		{{/if}}
+	{{#each}}
+<br/>
+</h6>

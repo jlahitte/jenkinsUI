@@ -5,25 +5,22 @@ $.handlebars({
 
 function displayEnvironementJobDetail(environement, job) {
 
-	var aDiv = $("<div>", {
-		id : "div_" + environement
-	});
+	var aDiv;
 	if (environement == "DR1") {
-		$("#jobsHandleBarsDR1").append(aDiv);
+		aDiv = $("#jobsHandleBarsDR1");
 	} else if (environement == "IR1") {
-		$("#jobsHandleBarsIR1").append(aDiv);
+		aDiv = $("#jobsHandleBarsIR1");
 	} else if (environement == "PP2") {
-		$("#jobsHandleBarsPP2").append(aDiv);
+		aDiv = $("#jobsHandleBarsPP2");
 	} else if (environement == "PRD") {
-		$("#jobsHandleBarsPRD").append(aDiv);
+		aDiv = $("#jobsHandleBarsPRD");
 	}
-
-	aDiv.render('jenkinsJobDetail', job);
+	aDiv.render('bs_env_detail', job);
 }
 
 displayChangeSet = function(build) {
 	console.log("displaying ChangeSet");
-	// RÃ©cupÃ©ration du div attenant au lien (dÃ©fini dans "jankinsJobDetail.hbs")
+	// Récupération du div attenant au lien (défini dans "jankinsJobDetail.hbs")
 	var div = $("[data-buildNumber=" + build.number + "]");
 	if (build.changeSet.items.length > 0) {
 		// Builds to display
@@ -64,20 +61,25 @@ displayJobLastCommit = function(commit) {
 listAssystFromGH = function(env) {
 	var boxListAssyst = $("#assystList");
 	boxListAssyst.html("");	
-	boxListAssyst.append("<div class='assystItem'>sur l'environement <b>"+ env + "</b></div>");
-	boxListAssyst.append("<div class='assystItem'><ul>");
-	boxListAssyst.append("<li class='assystItemChanged'>des modifications sont en cours pour cette assyst et non present sur l'environement</li>");
-	boxListAssyst.append("<li class='assystItemUpToDate'>l'environement est Ã  jours pour cette assyst</span></li>");
-	boxListAssyst.append("</ul></div>");
+	boxListAssyst.append("<div class='assystItem'>sur l'environnement <b>"+ env + "</b></div>");
+	boxListAssyst.append("<div class='assystItem'><h4>");
+
 	boxListAssyst.append("<ul>");
+	boxListAssyst.append("<li><span class='label label-default'>des modifications sont en cours pour cette assyst et non present sur l'environement</span></li>");
+
+	boxListAssyst.append("<li><span class='label label-success'>l'environement est Ã  jours pour cette assyst</span></li>");
+	boxListAssyst.append("</ul>");
+	boxListAssyst.append("</h4>");
+	boxListAssyst.append("<h6>");
 	$.each(window.ASSYST_LIST, function(assyst, entry) {
 		if (window.ASSYST_LIST[assyst][env].ahead_by > 0) {
-			boxListAssyst.append("<li class='assystItemChanged'><b>" + window.ASSYST_LIST[assyst].name + "</b></li>");
+			boxListAssyst.append("<span class='label label-success'>" + window.ASSYST_LIST[assyst].name + "</span>");
 		} else {
-			boxListAssyst.append("<li class='assystItemUpToDate'><b>" + window.ASSYST_LIST[assyst].name  + "</b></span> </li>");
+			boxListAssyst.append("<span class='label label-default'>" + window.ASSYST_LIST[assyst].name  + "</span>");
 		}
+		boxListAssyst.append("<br/>")
 	});
-	boxListAssyst.append("</ul>");
+	boxListAssyst.append("</h6>");
 	boxListAssyst.show();
 
 	ASSYST_HASHMAP = [];
