@@ -18,12 +18,13 @@ $(document).ready(function() {
 		window.PROXY_USER = proxyFcfg.get('proxy.user');
 		window.PROXY_PASS = proxyFcfg.get('proxy.pass');
 		window.PROXY_IP = proxyFcfg.get('proxy.ip');
+		$("#assystListGlobalDiv").hide();
+		$("#jenkinsBuildListGlobalDiv").hide();
 		authenticate();
 		initEnvironementCommitsList();
 		initAsstsytList();
 		// lancement du traitement
 		connectToBricoDepot();
-		$("#assystList").hide();
 	});
 });
 
@@ -32,17 +33,20 @@ function initAsstsytList() {
 }
 
 function initEnvironementCommitsList() {
-	for(var index=1;index<=3;index++){
+	for (var index = 1; index <= 9; index++) {
 
 		ghrepo.commits({
+			sha : "DR1",
 			page : index,
 			per_page : 200
 		}, "DR1", dr1CommitsListCallback);
 		ghrepo.commits({
+			sha : "PP2",
 			page : index,
 			per_page : 200
 		}, "PP2", pp2CommitsListCallback);
 		ghrepo.commits({
+			sha : "IR1",
 			page : index,
 			per_page : 200
 		}, "IR1", ir1CommitsListCallback);

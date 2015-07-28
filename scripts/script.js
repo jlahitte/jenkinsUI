@@ -9,17 +9,16 @@ $(main = function() {
 	// ////////////////////////
 	// List all jobs
 	// //////////////////////
-	$.getJSON(JENKINS_URL + JENKINS_JSON_PATH)
-	 .done(function(data) {
-		 	console.log("done");
-		 	jobs = getJobsData(data, function() {
-		 	for (i = 0; i < jobs.length; i++) {
-		 		var job = jobs[i];
-		 		jobs[i] = getJobDetail(job);
-		 	}
-		 	$('#jobsHandleBars').render('jenkinsJob', jobs);
-		 	}
-		 	)});
+	$.getJSON(JENKINS_URL + JENKINS_JSON_PATH).done(function(data) {
+		console.log("done");
+		jobs = getJobsData(data, function() {
+			for (i = 0; i < jobs.length; i++) {
+				var job = jobs[i];
+				jobs[i] = getJobDetail(job);
+			}
+			//$('#jobsHandleBars').render('jenkinsJob', jobs);
+		})
+	});
 
 	suppSymbolFromBranch = function(value) {
 		var re = /([\(-\)])/g;
@@ -29,20 +28,20 @@ $(main = function() {
 	getJobsData = function(data) {
 
 		var jobs = [];
-			var job = data.lastSuccessfulBuild;
-			var icon = "ressources/img/greenchecked.png";
-			if (job.color !== "blue") {
-				icon = "ressources/img/redchecked.png";
-			}
-			var jobObj = {
-				"icon" : icon,
-				"url" : job.url,
-				"name" : job.name,
-				"id" : 0,
-				"detail" : ""
-			};
-			console.log("jobObj" + jobObj);
-			jobs[0] = jobObj;
+		var job = data.lastSuccessfulBuild;
+		var icon = "ressources/img/greenchecked.png";
+		if (job.color !== "blue") {
+			icon = "ressources/img/redchecked.png";
+		}
+		var jobObj = {
+			"icon" : icon,
+			"url" : job.url,
+			"name" : job.name,
+			"id" : 0,
+			"detail" : ""
+		};
+		console.log("jobObj" + jobObj);
+		jobs[0] = jobObj;
 		return jobs;
 	};
 
