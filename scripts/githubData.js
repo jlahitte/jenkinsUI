@@ -10,14 +10,6 @@ authenticate = function() {
 	ghrepo = client.repo('BRICODEPOT/DEPOT_JAVA');
 }
 
-function compareBranche(branchId) {
-	if (window.ASSYST_LIST) {
-		$.each(window.ASSYST_LIST, function(assyst, entry) {
-			ghrepo.compareCommits(window.BRICO_ENVIRONEMENT[branchId].version.git.commit, entry.commit.sha, compareBrancheCallback, branchId, entry.name);
-		});
-	}
-}
-
 function listAllAssyts(err, body, headers) {
 
 	window.ASSYST_LIST = {};
@@ -32,11 +24,24 @@ function listAllAssyts(err, body, headers) {
 				console.log(entry.name);
 			}
 		});
+		$.each(window.BRICO_ENVIRONEMENT, function(env, entry) {
+			entry.compareAssytBranchCall = 0;
 
-		$.each(window.BRICO_ENVIRONEMENT, function(branchId, entry) {
-			compareBranche(branchId);
+		});
+		$.each(window.BRICO_ENVIRONEMENT, function(env, entry) {
+			compareBranche(env);
 		});
 	}
+}
+
+function compareBranche(branchId) {
+
+	if (window.ASSYST_LIST) {
+		$.each(window.ASSYST_LIST, function(assyst, entry) {
+			ghrepo.compareCommits(window.BRICO_ENVIRONEMENT[branchId].version.git.commit, entry.commit.sha, compareBrancheCallback, branchId, entry.name);
+		});
+	}
+
 }
 
 function compareBrancheCallback(err, body, headers, branch, assyst) {
@@ -56,6 +61,10 @@ function compareBrancheCallback(err, body, headers, branch, assyst) {
 					window.ASSYST_LIST[assystNumber] = {};
 					window.ASSYST_LIST[assystNumber][env] = {};
 					window.ASSYST_LIST[assystNumber][env] = body;
+				}
+				entry.compareAssytBranchCall++;
+				if (entry.compareAssytBranchCall == Object.keys(window.ASSYST_LIST).length) {
+					$("#buttonlistAssystBuild" + env).removeClass("disabled");
 				}
 			}
 		});

@@ -19,50 +19,10 @@ function displayEnvironementJobDetail(environement, job) {
 	}
 
 	aDiv.render('jenkinsJobDetail', job);
-	$("#" + environement + "Panel").show(1000);
+	$("#spinner" + environement).fadeOut(500);
 }
 
-displayChangeSet = function(build) {
-	console.log("displaying ChangeSet");
-	// Récupération du div attenant au lien (défini dans "jankinsJobDetail.hbs")
-	var div = $("[data-buildNumber=" + build.number + "]");
-	if (build.changeSet.items.length > 0) {
-		// Builds to display
-		div.render('jenkinsChangeSet', build);
-	} else {
-		// Nothing to display
-		console.log("No build to display");
-		div.html("<span class='error'>No changes...</span>");
-	}
-
-}
-
-displayJobLastCommit = function(commit) {
-	var aSpan = $("<span>", {
-		id : "span_" + commit.fullDisplayName.split(" ")[0]
-	});
-
-	if (commit.fullDisplayName.split(" ")[0] == "DEPOT_JAVA_DR1_branch(DR1)") {
-		$("#jobsHandleBarsDR1 .l_jobs").first().append(aSpan);
-	}
-	if (commit.fullDisplayName.split(" ")[0] == "DEPOT_JAVA_IR1_branch(IR1)") {
-		$("#jobsHandleBarsIR1 .l_jobs").append(aSpan);
-	}
-	if (commit.fullDisplayName.split(" ")[0] == "DEPOT_JAVA_PP2_branch(PP2)") {
-		$("#jobsHandleBarsPP2 .l_jobs").append(aSpan);
-	}
-	if (commit.fullDisplayName.split(" ")[0] == "DEPOT_JAVA_PROD_branch") {
-		$("#jobsHandleBarsPRD .l_jobs").append(aSpan);
-	}
-	var lastCommit = {
-		lastCommit : commit.actions[1].lastBuiltRevision.SHA1,
-		branch : commit.actions[1].lastBuiltRevision.branch[0].name,
-		url : GITHUB_URL + "commit/" + commit.actions[1].lastBuiltRevision.SHA1
-	};
-	aSpan.render('commit', lastCommit);
-}
-
-listAssystFromGH = function(env) {
+function listAssystFromGH(env) {
 	$("#jenkinsBuildListGlobalDiv").hide(900);
 	$.each(window.BRICO_ENVIRONEMENT, function(environement, instance) {
 		if (env != environement) {
@@ -73,22 +33,28 @@ listAssystFromGH = function(env) {
 	});
 	var boxListAssyst = $("#assystList");
 	boxListAssyst.html("");
+
+	var listAssystPanelTitle = $("#listAssytPanelTitle");
+	listAssystPanelTitle.html("");
+	listAssystPanelTitle.html("Liste des Assytes de l'environement " + env);
+
 	boxListAssyst.append("<div><ul class='list-group col-xs-12 col-sm-12 col-md-12 col-lg-12'>");
-	boxListAssyst.append("<li  class='list-group-item active'>Liste des assysts sur l'environement <b>" + env + "</b></li>");
 	var index = 0;
 	$.each(window.ASSYST_LIST, function(assyst, entry) {
 		var coll = ' listcol-xs-12 col-sm-12 col-md-4 col-lg-4 ';
 		if (environementContainsAssyst(env, assyst)) {
 			if (window.ASSYST_LIST[assyst][env].ahead_by > 0) {
-				boxListAssyst.append("<li class='list-group-item list-group-item-danger " + coll + "'><b>" + window.ASSYST_LIST[assyst].name
-						+ "</b> <span class='badge badge-danger'>" + window.ASSYST_LIST[assyst][env].ahead_by + "</span></li>");
+				boxListAssyst.append('<li class="list-group-item list-group-item-danger ' + coll
+						+ '"><a class="bricoListLink" href="#"  data-toggle="modal"  data-target="#assytCommitsCommentModal"  onclick="updateAssystCommitsComments(\'' + assyst
+						+ '\',\'' + env + '\',\'danger\');"><b>' + window.ASSYST_LIST[assyst].name + '</b></a><span class="badge badge-danger">'
+						+ window.ASSYST_LIST[assyst][env].ahead_by + '</span></li>');
 			} else {
-				boxListAssyst.append("<li class='list-group-item list-group-item-success " + coll + "'><b>" + window.ASSYST_LIST[assyst].name
-						+ "</b>  <span class='badge badge-success'><span class='glyphicon glyphicon-ok-sign' aria-hidden='true'></span></span></li>");
+				boxListAssyst.append('<li class="list-group-item list-group-item-success ' + coll + '"><b>' + window.ASSYST_LIST[assyst].name
+						+ '</b><span class="badge badge-success"><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span></span></li>');
 			}
 		} else {
-			boxListAssyst.append("<li class='list-group-item " + coll + "'><b>" + window.ASSYST_LIST[assyst].name
-					+ "</b> <span class='badge'><span class='glyphicon glyphicon glyphicon-ban-circle' aria-hidden='true'></span></span></li>");
+			boxListAssyst.append('<li class="list-group-item ' + coll + '"><b>' + window.ASSYST_LIST[assyst].name
+					+ '</b><span class="badge"><span class="glyphicon glyphicon glyphicon-ban-circle" aria-hidden="true"></span></span></li>');
 		}
 		index++;
 	});
@@ -96,7 +62,7 @@ listAssystFromGH = function(env) {
 	$("#assystListGlobalDiv").show(1000);
 }
 
-listJenkinsBuild = function(env) {
+function listJenkinsBuild(env) {
 	$("#assystListGlobalDiv").hide(900);
 	$.each(window.BRICO_ENVIRONEMENT, function(environement, instance) {
 		if (env != environement) {
@@ -107,23 +73,42 @@ listJenkinsBuild = function(env) {
 	});
 	var boxListBuilds = $("#jenkinsBuildList");
 	boxListBuilds.html("");
+
+	var listBuildPanelTitle = $("#listBuildPanelTitle");
+	listBuildPanelTitle.html("");
+	listBuildPanelTitle.html("Liste des Builds Jenkins de l'environement " + env);
+
 	var coll = ' listcol-xs-12 col-sm-12 col-md-4 col-lg-4 ';
 	boxListBuilds.append('<ul class=" list-group col-xs-12 col-sm-12 col-md-12 col-lg-12">');
 	$.each(window.BRICO_ENVIRONEMENT[env].job.builds, function(build, entry) {
 
 		if (entry.changes) {
 			if (entry.success == "buildSuccess") {
-				boxListBuilds.append('<li class="list-group-item list-group-item-success ' + coll + '">Build n°<b>' + entry.number + '</b> du ' + entry.buildDate + '</li>');
+				boxListBuilds.append('<li class="list-group-item list-group-item-success ' + coll
+						+ '"><a class="bricoListLink" href="#" data-toggle="modal" data-target="#buildCommitsCommentModal" onclick="updateBuildCommitsComments(\'' + entry.number
+						+ '\',\'' + env + '\',\'success\');">Build n°<b>' + entry.number + '</b> du ' + entry.buildDate + '</a><span class="badge badge-success">'
+						+ entry.buildDetail.changeSet.items.length + '</span></span></li>');
+			} else if (entry.success == "buildFail") {
+				boxListBuilds.append('<li class="list-group-item list-group-item-danger ' + coll
+						+ '"><a class="bricoListLink" href="#" data-toggle="modal"  data-target="#buildCommitsCommentModal" onclick="updateBuildCommitsComments(\'' + entry.number
+						+ '\',\'' + env + '\',\'danger\');">Build n°<b>' + entry.number + '</b> du ' + entry.buildDate + '</a><span class="badge badge-danger">'
+						+ entry.buildDetail.changeSet.items.length + '</span></span></li>');
 			} else {
-				boxListBuilds.append('<li class="list-group-item list-group-item-danger ' + coll + '">Build n°<b>' + entry.number + '</b> du ' + entry.buildDate + '</li>');
+				boxListBuilds.append('<li class="list-group-item' + coll
+						+ '"><a class="bricoListLink" href="#" data-toggle="modal"  data-target="#buildCommitsCommentModal" onclick="updateBuildCommitsComments(\'' + entry.number
+						+ '\',\'' + env + '\');">Build n°<b>' + entry.number + '</b> du ' + entry.buildDate + '</a><span class="badge">' + entry.buildDetail.changeSet.items.length
+						+ '</span></span></li>');
 			}
 		} else {
 			if (entry.success == "buildSuccess") {
 				boxListBuilds.append('<li  class="list-group-item list-group-item-success ' + coll + '">Build n°<b>' + entry.number + '</b> du ' + entry.buildDate
 						+ '<span class="badge badge-success"><span class="glyphicon glyphicon glyphicon-ban-circle" aria-hidden="true"></span></span></li>');
-			} else {
+			} else if (entry.success == "buildFail") {
 				boxListBuilds.append('<li  class="list-group-item list-group-item-danger ' + coll + '">Build n°<b>' + entry.number + '</b> du ' + entry.buildDate
 						+ '<span class="badge badge-danger"><span class="glyphicon glyphicon glyphicon-ban-circle" aria-hidden="true"></span></span></li>');
+			} else {
+				boxListBuilds.append('<li  class="list-group-item list-group-item-danger ' + coll + '">Build n°<b>' + entry.number + '</b> du ' + entry.buildDate
+						+ '<span class="badge"><span class="glyphicon glyphicon glyphicon-ban-circle" aria-hidden="true"></span></span></li>');
 			}
 		}
 	});
@@ -132,7 +117,7 @@ listJenkinsBuild = function(env) {
 	$("#jenkinsBuildListGlobalDiv").show(1000);
 }
 
-fermerPanel = function() {
+function fermerPanel() {
 	$("#assystListGlobalDiv").hide(900);
 	$("#jenkinsBuildListGlobalDiv").hide(900);
 	$.each(window.BRICO_ENVIRONEMENT, function(environement, instance) {
@@ -140,12 +125,10 @@ fermerPanel = function() {
 	});
 }
 
-openGitHub = function(url) {
+function openGitHub(url) {
 	var gui = require('nw.gui');
-
 	// Open URL with default browser.
 	gui.Shell.openExternal(url);
-
 };
 
 function togglechangeSetDetail(event, id) {
@@ -158,7 +141,7 @@ function launchUnderIE(url) {
 
 	child = exec('\"C:\\Program\ Files\\Internet\ Explorer\\iexplore.exe\" ' + url, function(error, stdout, stderr) {
 		if (stdout !== null) {
-			console.log('D�marrage du lien dans IE : ' + stdout);
+			console.log('Démarrage du lien dans IE : ' + stdout);
 		}
 		if (stderr !== null) {
 			console.log("Erreur lors de l'ouverture de l'url dans IE: " + stderr);
@@ -167,4 +150,48 @@ function launchUnderIE(url) {
 			console.log('exec error: ' + error);
 		}
 	});
+}
+
+function updateAssystCommitsComments(assytNumber, environement, status) {
+	$("#assytCommitsCommentModalHeader").removeClass();
+	if (status) {
+		$("#assytCommitsCommentModalHeader").addClass("modal-header alert-" + status);
+	} else {
+		$("#assytCommitsCommentModalHeader").addClass("modal-header");
+	}
+	$("#assytCommitsCommentModalTitle").html("");
+	$("#assytCommitsCommentModalTitle").html("Commentaires pour l'Assyt " + assytNumber + " sur l'environement " + environement);
+
+	var assytCommitsCommentModalBody = $("#assytCommitsCommentModalBody");
+	assytCommitsCommentModalBody.html("");
+	assytCommitsCommentModalBody.append('<ul>');
+	$.each(window.ASSYST_LIST[assytNumber][environement].commits, function(index, commitData) {
+		assytCommitsCommentModalBody.append('<li> le ' + commitData.commit.author.date + ' par ' + commitData.commit.author.name + ' : ' + commitData.commit.message
+				+ '</li>');
+	});
+	assytCommitsCommentModalBody.append('</ul>');
+}
+
+function updateBuildCommitsComments(buildNumber, environement, status) {
+	$("#buildCommitsCommentModalHeader").removeClass();
+	if (status) {
+		$("#buildCommitsCommentModalHeader").addClass("modal-header alert-" + status);
+	} else {
+		$("#buildCommitsCommentModalHeader").addClass("modal-header");
+	}
+	$("#buildCommitsCommentModalTitle").html("");
+	$("#buildCommitsCommentModalTitle").html("Commentaires pour le build " + buildNumber + " sur l'environement " + environement);
+
+	var buildCommitsCommentModalBody = $("#buildCommitsCommentModalBody");
+	buildCommitsCommentModalBody.html("");
+	buildCommitsCommentModalBody.append('<ul>');
+	$.each(window.BRICO_ENVIRONEMENT[environement].job.builds, function(index, build) {
+		if (build.number == buildNumber) {
+			$.each(build.buildDetail.changeSet.items, function(index, item) {
+				buildCommitsCommentModalBody.append('<li> le ' + FRDateString(new Date(item.timestamp)) + ' par ' + item.author.fullName + ' : ' + item.comment + '</li>');
+			});
+		}
+
+	});
+	buildCommitsCommentModalBody.append('</ul>');
 }

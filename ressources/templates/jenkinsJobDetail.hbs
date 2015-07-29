@@ -16,8 +16,8 @@
   </br> 
 	<div class="btn-toolbar" role="toolbar" aria-label="...">
 		<div class="btn-group" role="group" aria-label="...">
-  			<button type="button" class="btn btn-warning" onclick="listAssystFromGH('{{id}}')"><span class="glyphicon glyphicon-alert" aria-hidden="true"> Assystes </span> </button>
-  			<button type="button" class="btn btn-warning" onclick="listJenkinsBuild('{{id}}')"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"> Jenkins Builds </span> </button>
+  			<button type="button" class="btn btn-warning listAssyst disabled" id="buttonlistAssystBuild{{id}}" onclick="listAssystFromGH('{{id}}')"><span class="glyphicon glyphicon-alert" aria-hidden="true"> Assystes </span> </button>
+  			<button type="button" class="btn btn-warning listJenkinsBuild" id="buttonlistJenkinsBuild{{id}}" onclick="listJenkinsBuild('{{id}}')"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"> Jenkins Builds </span> </button>
 		</div>
 		<div class="btn-group" role="group" aria-label="...">
 			<button type="button" class="btn btn-primary" onclick="launchUnderIE('{{url}}');"><span class="glyphicon glyphicon-link" aria-hidden="true"> Ouvrir {{id}} </span></button>

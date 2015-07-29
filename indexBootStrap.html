@@ -48,38 +48,84 @@
     <div class="panel panel-info">
       <div class="panel-body" id="TableauDeBord">
         <div class="col-sm-6">
-          <div class="panel panel-info" id="DR1Panel" style="display: none;">
+          <div class="panel panel-info" id="DR1Panel">
             <div class="panel-heading">
               <h3 class="panel-title">DR1</h3>
             </div>
-            <div class="panel-body" id="jobsHandleBarsDR1"></div>
-          </div>
-          <div class="panel panel-info" id="IR1Panel" style="display: none;">
-            <div class="panel-heading">
-              <h3 class="panel-title">IR1</h3>
+            <div class="panel-body" id="jobsHandleBarsDR1">
+              <div id="spinnerDR1">
+                <div class="ball"></div>
+                <div class="ball1"></div>
+              </div>
             </div>
-            <div class="panel-body" id="jobsHandleBarsIR1"></div>
           </div>
         </div>
         <div class="col-sm-6">
-          <div class="panel panel-info" id="PP2Panel" style="display: none;">
+          <div class="panel panel-info" id="IR1Panel">
+            <div class="panel-heading">
+              <h3 class="panel-title">IR1</h3>
+            </div>
+            <div class="panel-body" id="jobsHandleBarsIR1">
+              <div id="spinnerIR1">
+                <div class="ball"></div>
+                <div class="ball1"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="panel panel-info" id="PP2Panel">
             <div class="panel-heading">
               <h3 class="panel-title">PP2</h3>
             </div>
-            <div class="panel-body" id="jobsHandleBarsPP2"></div>
+            <div class="panel-body" id="jobsHandleBarsPP2">
+              <div id="spinnerPP2">
+                <div class="ball"></div>
+                <div class="ball1"></div>
+              </div>
+            </div>
           </div>
-          <div class="panel panel-info" id="PRDPanel" style="display: none;">
+        </div>
+        <div class="col-sm-6">
+          <div class="panel panel-info" id="PRDPanel">
             <div class="panel-heading">
               <h3 class="panel-title">PRD</h3>
             </div>
-            <div class="panel-body" id="jobsHandleBarsPRD"></div>
+            <div class="panel-body" id="jobsHandleBarsPRD">
+              <div id="spinnerPRD">
+                <div class="ball"></div>
+                <div class="ball1"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="assytCommitsCommentModal" role="dialog">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header" id="assytCommitsCommentModalHeader">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="assytCommitsCommentModalTitle">Detail Assyt</h4>
+              </div>
+              <div class="modal-body" id="assytCommitsCommentModalBody"></div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="buildCommitsCommentModal" role="dialog">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header" id="buildCommitsCommentModalHeader">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="buildCommitsCommentModalTitle">Detail Assyt</h4>
+              </div>
+              <div class="modal-body" id="buildCommitsCommentModalBody"></div>
+            </div>
           </div>
         </div>
         <div class="col-sm-12">
           <div class="panel panel-warning" id="assystListGlobalDiv" style="display: none;">
             <div class="panel-heading clearfix">
               <h3 class="panel-title pull-left">
-                <span class="glyphicon glyphicon-alert" aria-hidden="true"> </span> Liste des Assytes
+                <span class="glyphicon glyphicon-alert" aria-hidden="true"> </span> <span id="listAssytPanelTitle"> Liste des Assytes </span>
               </h3>
               <div class="btn-group pull-right">
                 <button type="button" class="btn btn-danger btn-xs" onclick="fermerPanel();">
@@ -89,10 +135,12 @@
             </div>
             <div class="panel-body" id="assystList"></div>
           </div>
+        </div>
+        <div class="col-sm-12">
           <div class="panel panel-warning" id="jenkinsBuildListGlobalDiv" style="display: none;">
             <div class="panel-heading clearfix">
               <h3 class="panel-title pull-left">
-                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"> </span> Liste des Builds Jenkins
+                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"> </span> <span id="listBuildPanelTitle"> Liste des Builds Jenkins </span>
               </h3>
               <div class="btn-group pull-right">
                 <button type="button" class="btn btn-danger btn-xs" onclick="fermerPanel();">

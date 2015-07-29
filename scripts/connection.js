@@ -1,3 +1,25 @@
+function connectToBricoDepot() {
+	$.each(window.BRICO_ENVIRONEMENT, function(environement, instance) {
+		var url = instance.url + BRICO_VERSION_API_PATH;
+		console.log(url);
+		updateInstanceVertion(url, environement);
+	});
+};
+
+function updateInstanceVertion(url, environement) {
+	$.getJSON(url).done(function(data) {
+		console.log("Details from bricodepot instance received for " + environement);
+		window.BRICO_ENVIRONEMENT[environement].version = data;
+	}).fail(function(data) {
+		console.log("error " + data.status + " for bricodepot instance " + environement);
+		window.BRICO_ENVIRONEMENT[environement].version = {};
+	}).always(function() {
+		var url = window.BRICO_ENVIRONEMENT[environement].branch_url + JENKINS_JSON_PATH;
+		console.log(url);
+		updateInstanceJob(url, environement);
+	});
+}
+
 function updateInstanceJob(url, environement) {
 	$.getJSON(url).done(function(data) {
 		console.log("Details from job received for " + environement);
@@ -33,63 +55,24 @@ function updateBuildItemsDetails(environement, buildItemIndex) {
 				}
 				if (data.result == "SUCCESS") {
 					window.BRICO_ENVIRONEMENT[environement].job.builds[buildItemIndex].success = "buildSuccess";
-				} else {
+				} else if (data.result == "FAILURE") {
 					window.BRICO_ENVIRONEMENT[environement].job.builds[buildItemIndex].success = "buildFail";
+				} else {
+					window.BRICO_ENVIRONEMENT[environement].job.builds[buildItemIndex].success = "other";
 				}
 				window.BRICO_ENVIRONEMENT[environement].job.builds[buildItemIndex].buildDate = FRDateString(new Date(data.timestamp));
+				window.BRICO_ENVIRONEMENT[environement].job.builds[buildItemIndex].sha = data.actions[1].lastBuiltRevision.SHA1;
+
 			}).always(function() {
 		window.BRICO_ENVIRONEMENT[environement].job.callCount = window.BRICO_ENVIRONEMENT[environement].job.callCount + 1;
 		if ((window.BRICO_ENVIRONEMENT[environement].job.builds.length) === window.BRICO_ENVIRONEMENT[environement].job.callCount) {
 			displayEnvironementJobDetail(environement, window.BRICO_ENVIRONEMENT[environement]);
-			
 		}
 	});
 }
-
 function FRDateString(date) {
 	function pad(n) {
 		return n < 10 ? '0' + n : n;
 	}
-	return pad(date.getDate()) + '/' + pad(date.getMonth()+1) + '/' + pad(date.getFullYear()) + ' à ' + pad(date.getHours()) + 'h' + pad(date.getMinutes());
+	return pad(date.getDate()) + '/' + pad(date.getMonth() + 1) + '/' + pad(date.getFullYear()) + ' à ' + pad(date.getHours()) + 'h' + pad(date.getMinutes());
 }
-
-connectToBricoDepot = function() {
-	$.each(window.BRICO_ENVIRONEMENT, function(environement, instance) {
-		var url = instance.url + BRICO_VERSION_API_PATH;
-		console.log(url);
-		updateInstanceVertion(url, environement);
-	});
-};
-
-function updateInstanceVertion(url, environement) {
-	$.getJSON(url).done(function(data) {
-		console.log("Details from bricodepot instance received for " + environement);
-		window.BRICO_ENVIRONEMENT[environement].version = data;
-	}).fail(function(data) {
-		console.log("error " + data.status + " for bricodepot instance " + environement);
-		window.BRICO_ENVIRONEMENT[environement].version = {};
-	}).always(function() {
-		var url = window.BRICO_ENVIRONEMENT[environement].branch_url + JENKINS_JSON_PATH;
-		console.log(url);
-		updateInstanceJob(url, environement);
-	});
-}
-
-// Get build details
-builds = function(url) {
-	$.getJSON(url + JENKINS_JSON_PATH).done(function(data) {
-		console.log("Detail for build logged " + data.displayName);
-	});
-}
-
-// Get a list of changes for a particular build
-// and display them as per defined within genUi.js--> displayChangeSet()
-// url : url to the detail of the build
-changeSetDetail = function(event, url) {
-	// Désactivation du comportement du lien par defaut
-	// Provoquait un retour en haut de page
-	event.preventDefault();
-	$.getJSON(url + JENKINS_JSON_PATH).done(function(data) {
-		displayChangeSet(data);
-	});
-};
