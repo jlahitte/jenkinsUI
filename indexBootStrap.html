@@ -60,19 +60,22 @@
 					<span class="input-group-addon" id="passAddon">Mot de passe</span>
 					<input type="password" id="proxyPass"  class="form-control" placeholder="proxySettings" aria-describedby="passAddon"/>
 				</div>
-			
-				<button type="button" class="btn btn-default"
-					onclick="cancelProxyData();">
-					<span class="glyphicon glyphicon-alert" aria-hidden="true">
-						Annuler </span>
-				</button>
-				<button type="button" class="btn btn-primary"
-					onclick="saveProxyData();">
-					<span class="glyphicon glyphicon-ok" aria-hidden="true">
-						Sauvegarder </span>
-				</button>
-
+								
+				<div class="btn-group btn-group-md pull-right">
+					<button type="button" class="btn btn-default"
+						onclick="cancelProxyData();">
+						<span class="glyphicon glyphicon-alert" aria-hidden="true">
+							Annuler </span>
+					</button>
+					
+					<button type="button" class="btn btn-primary"
+						onclick="saveProxyData();">
+						<span class="glyphicon glyphicon-ok" aria-hidden="true">
+							Sauvegarder </span>
+					</button>
+				</div>
 	</div>
+
 	<div class="panel panel-info">
 		<div class="panel-body" id="TableauDeBord">
 

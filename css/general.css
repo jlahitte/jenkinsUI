@@ -164,3 +164,6 @@ a.bricoListLink {
 	visibility: hidden;
 	 display: inline !important;
 }
+.btn {
+    margin: 12px;
+}
