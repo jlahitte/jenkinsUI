@@ -200,25 +200,43 @@ function openProxyConfigurationBox(){
 	$("#cog-proxy").click(function(){
 		cancelProxyData();
 	});
+	var jsoncfg = require('jsoncfg');
+	
+	jsoncfg.loadFiles('./cfg', function(err, files, errInfo) {
+		if (err) {
+			console.log(err + "  " + errInfo['jenkins']);
+		}
+		var usr = files.proxy.get('proxy.user');
+		$("#proxyLogin").val(usr);
+		var pass = files.proxy.get('proxy.pass');
+		$("#proxyPass").val(pass);
+	});
+	
 	// Display box
 	$("#proxyBox").removeClass("hidden-inline-sm");
 	
 }
 
 function saveProxyData(){
-	var jsoncfg = require('jsoncfg');
-	var login = $("#proxyLogin").val();
-	var pass = $("#proxyPass").val();
-	
-	jsoncfg.loadFiles('./cfg', function(err, files, errInfo) {
-		files.proxy.set('proxy.user',login);
-		files.proxy.set('proxy.pass',pass);
+	var jsonfile = require('jsonfile')
+	var util = require('util')
+	 
+	var file = './cfg/proxy.json'
+	jsonfile.readFile(file, function(err, obj) {
+	  console.dir(obj);
+	  obj.proxy.user = $("#proxyLogin").val();
+	  obj.proxy.pass = $("#proxyPass").val();
+	  jsonfile.writeFile(file,obj);
+	  if (!$("#writeStateAlert").length){
+		  $("#proxyBox").append("<div id='writeStateAlert' class='alert alert-success' role='alert'>Config. sauvegardé</div>");
+	  }
 	});
 }
 
 
 function cancelProxyData(){
 	$("#proxyBox").addClass("hidden-inline-sm");
+	$("#writeStateAlert").remove();
 	$("#cog-proxy").click(function(){
 		openProxyConfigurationBox();
 	});
