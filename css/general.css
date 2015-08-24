@@ -1,53 +1,161 @@
 body {
-	background-color: #d92323;
+  background-color: #006591;
+  padding-top: 80px;
 }
 
 h1, h2, h3 {
-	color: #ffffff;
+  color: #ffffff;
 }
 
 .fixedBox {
-	position: fixed;
-	right: 10px;
-	top: 10px;
-	width: 350px;
+  position: fixed;
+  right: 10px;
+  top: 10px;
+  width: 350px;
 }
+
 .innerFixedBox {
-	position: fixed;
-	right: 10px;
-	top: 46px;
-	height: 400px;
-	width: 350px;
+  position: fixed;
+  right: 10px;
+  top: 46px;
+  height: 400px;
+  width: 350px;
 }
 
 .TitreTableCell {
-	background-color: rgba(222, 227, 227, 0.77);
-	border-color: #d4e3e6;
-	border-style: outset;
-	border-width: 3px;
-	border-radius: 10px;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	width: 350px;
-	text-align: center;
+  background-color: rgba(222, 227, 227, 0.77);
+  border-color: #d4e3e6;
+  border-style: outset;
+  border-width: 3px;
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  width: 350px;
+  text-align: center;
 }
 
 .sizeBox {
-	height: 400px;
-	width: 350px;
+  height: 400px;
+  width: 350px;
 }
 
 .listFixBox {
-	background-color: rgba(222, 227, 227, 0.77);
-	border-color: #d4e3e6;
-	border-style: outset;
-	border-width: 3px;
-	border-radius: 10px;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-top: 10px;
-	padding-bottom: 5px;
-	width: 350px;
+  background-color: rgba(222, 227, 227, 0.77);
+  border-color: #d4e3e6;
+  border-style: outset;
+  border-width: 3px;
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  width: 350px;
+}
+
+.badge-danger {
+  background-color: #d43f3a;
+}
+
+.badge-warning {
+  background-color: #d58512;
+}
+
+.badge-success {
+  background-color: #398439;
+}
+
+.badge-info {
+  background-color: #269abc;
+}
+
+.badge-inverse {
+  background-color: #333333;
+}
+
+.navbar-bricodepot, .navbar-default.navbar-bricodepot {
+  background-color: #006591;
+  border: none;
+}
+
+.navbar-text-bricodepot, .navbar-text.navbar-text-bricodepot {
+  color: #fff;
+}
+
+.ball {
+    background-color: rgba(0,0,0,0);
+    border: 5px solid rgba(0,183,229,0.9);
+    opacity: .9;
+    border-top: 5px solid rgba(0,0,0,0);
+    border-left: 5px solid rgba(0,0,0,0);
+    border-radius: 50px;
+    box-shadow: 0 0 35px #2187e7;
+    width: 50px;
+    height: 50px;
+    margin: 0 auto;
+    -moz-animation: spin .5s infinite linear;
+    -webkit-animation: spin .5s infinite linear;
+}
+
+.ball1 {
+    background-color: rgba(0,0,0,0);
+    border: 5px solid rgba(0,183,229,0.9);
+    opacity: .9;
+    border-top: 5px solid rgba(0,0,0,0);
+    border-left: 5px solid rgba(0,0,0,0);
+    border-radius: 50px;
+    box-shadow: 0 0 15px #2187e7;
+    width: 30px;
+    height: 30px;
+    margin: 0 auto;
+    position: relative;
+    top: -40px;
+    -moz-animation: spinoff .5s infinite linear;
+    -webkit-animation: spinoff .5s infinite linear;
+}
+
+@-moz-keyframes spin {
+    0% {
+        -moz-transform: rotate(0deg);
+    }
+
+    100% {
+        -moz-transform: rotate(360deg);
+    };
+}
+
+@-moz-keyframes spinoff {
+    0% {
+        -moz-transform: rotate(0deg);
+    }
+
+    100% {
+        -moz-transform: rotate(-360deg);
+    };
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    };
+}
+
+@-webkit-keyframes spinoff {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(-360deg);
+    };
+}
+
+a.bricoListLink {
+    color: inherit;
+    
 }

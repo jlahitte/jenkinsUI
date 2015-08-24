@@ -18,12 +18,13 @@ $(document).ready(function() {
 		window.PROXY_USER = proxyFcfg.get('proxy.user');
 		window.PROXY_PASS = proxyFcfg.get('proxy.pass');
 		window.PROXY_IP = proxyFcfg.get('proxy.ip');
+		$("#assystListGlobalDiv").hide();
+		$("#jenkinsBuildListGlobalDiv").hide();
 		authenticate();
 		initEnvironementCommitsList();
 		initAsstsytList();
 		// lancement du traitement
 		connectToBricoDepot();
-		$("#assystList").hide();
 	});
 });
 

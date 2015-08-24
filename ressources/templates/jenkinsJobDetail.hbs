@@ -1,7 +1,5 @@
 <div class="JobDetail text_valign-middle">
-  <span class="jobTitle">{{id}}</span>
-  </br>
-  <span class="l_jobs">code de la branche github <b>{{branch_name}}</b> deployé sur l'environement <b>{{id}}</b></span>
+  <span class="l_jobs">Le code deployé est celui de la branche github <b>{{branch_name}}</b></span>
   </br>
   {{#if version.version}}
 	  <span class="l_jobs">Date du build : <b>{{version.build.Date}}</b></span>
@@ -14,30 +12,16 @@
   	<span class="error"><b>L'instance est hors ligne</b></span>
 	  </br>
   {{/if}}
-  <span class="env_url"><a href="#" onclick="launchUnderIE('{{url}}');">Lien vers l'instance</a></b></span>
-  </br> 
-  </br>
-  <input type="button" value="ASSYST" onclick="listAssystFromGH('{{id}}')"/>
   
-  <div id='builds_{{name}}'>
-  	<ul>
-	{{#each job.builds}}
-		{{#if changes}}
-			<li  class={{success}}><div class="buildDetailList"><a href="#" onclick="togglechangeSetDetail(event,'env-{{../../instance_name}}_build-{{number}}');" class="buildDetailLink">Build n°{{number}} du {{buildDate}} - Voir les changements</a></div></li>
-			<div id='env-{{../../instance_name}}_build-{{number}}' data-buildNumber="{{number}}" class="buildDetail">
-				<div class="commitsText">
-					<ul>
-						{{#each buildDetail.changeSet.items}}
-							<li>{{date}} - {{msg}}</li>
-							<span> {{comment}}</span>
-						{{/each}}
-					</ul>
-				</div>
-			</div>
-		{{else}}
-			<li  class={{success}}><div class="buildDetailList">Build n°{{number}} du {{buildDate}} - sans modification</div></li>			
-		{{/if}}
-	{{/each}}
-	</ul>
-  <div>
+  </br> 
+	<div class="btn-toolbar" role="toolbar" aria-label="...">
+		<div class="btn-group" role="group" aria-label="...">
+  			<button type="button" class="btn btn-warning listAssyst disabled" id="buttonlistAssystBuild{{id}}" onclick="listAssystFromGH('{{id}}')"><span class="glyphicon glyphicon-alert" aria-hidden="true"> Assystes </span> </button>
+  			<button type="button" class="btn btn-warning listJenkinsBuild" id="buttonlistJenkinsBuild{{id}}" onclick="listJenkinsBuild('{{id}}')"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"> Jenkins Builds </span> </button>
+		</div>
+		<div class="btn-group" role="group" aria-label="...">
+			<button type="button" class="btn btn-primary" onclick="launchUnderIE('{{url}}');"><span class="glyphicon glyphicon-link" aria-hidden="true"> Ouvrir {{id}} </span></button>
+		</div>
+	</div>
+  
 </div>
