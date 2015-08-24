@@ -20,6 +20,9 @@ $(document).ready(function() {
 		window.PROXY_IP = proxyFcfg.get('proxy.ip');
 		$("#assystListGlobalDiv").hide();
 		$("#jenkinsBuildListGlobalDiv").hide();
+		$("#cog-proxy").click(function(){
+			openProxyConfigurationBox();
+		});
 		authenticate();
 		initEnvironementCommitsList();
 		initAsstsytList();

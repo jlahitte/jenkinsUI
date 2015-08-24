@@ -44,9 +44,19 @@
       </div>
     </nav>
   </div>
-  <div class="col-sm-12">
+
+  	<div class="col-sm-1">
+     	<button type="button" id="cog-proxy" class="btn" ><span class="glyphicon glyphicon-cog" aria-hidden="true"> </span> </button>
+  	</div>
+    <div class="col-sm-11 hidden-inline-sm" id="proxyBox">
+    		Login : <input type="text" id="proxyLogin"/></br>
+      		password : <input type="password" id="proxyPass"/></br>
+      		<button type="button" class="btn btn-warning" onclick="cancelProxyData();"><span class="glyphicon glyphicon-alert" aria-hidden="true"> Annuler </span> </button>
+      		<button type="button" class="btn btn-success" onclick="saveProxyData();"><span class="glyphicon glyphicon-ok" aria-hidden="true"> Sauvegarder </span> </button>
+    </div>
     <div class="panel panel-info">
       <div class="panel-body" id="TableauDeBord">
+
         <div class="col-sm-6">
           <div class="panel panel-info" id="DR1Panel">
             <div class="panel-heading">

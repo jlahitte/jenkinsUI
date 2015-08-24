@@ -195,3 +195,31 @@ function updateBuildCommitsComments(buildNumber, environement, status) {
 	});
 	buildCommitsCommentModalBody.append('</ul>');
 }
+
+function openProxyConfigurationBox(){
+	$("#cog-proxy").click(function(){
+		cancelProxyData();
+	});
+	// Display box
+	$("#proxyBox").removeClass("hidden-inline-sm");
+	
+}
+
+function saveProxyData(){
+	var jsoncfg = require('jsoncfg');
+	var login = $("#proxyLogin").val();
+	var pass = $("#proxyPass").val();
+	
+	jsoncfg.loadFiles('./cfg', function(err, files, errInfo) {
+		files.proxy.set('proxy.user',login);
+		files.proxy.set('proxy.pass',pass);
+	});
+}
+
+
+function cancelProxyData(){
+	$("#proxyBox").addClass("hidden-inline-sm");
+	$("#cog-proxy").click(function(){
+		openProxyConfigurationBox();
+	});
+}
